@@ -13,16 +13,14 @@
         <div class="doc">
           <div class="title">Getting Started</div>
           <p>
-            electron-vue comes packed with detailed documentation that covers everything from
-            internal configurations, using the project structure, building your application,
-            and so much more.
+            Efficiency improvement for iOS&Android modular development..
           </p>
-          <button @click="open('https://simulatedgreg.gitbooks.io/electron-vue/content/')">Read the Docs</button><br><br>
+          <el-button type="primary" @click="push('/home')" round>Add your first project</el-button><br><br>
         </div>
         <div class="doc">
-          <div class="title alt">Other Documentation</div>
-          <button class="alt" @click="open('https://electron.atom.io/docs/')">Electron</button>
-          <button class="alt" @click="open('https://vuejs.org/v2/guide/')">Vue.js</button>
+          <div class="title alt">About us</div>
+          <el-button @click="open('https://electron.atom.io/docs/')" round>Github</el-button>
+          <el-button @click="open('https://vuejs.org/v2/guide/')" round>Vue.js</el-button>
         </div>
       </div>
     </main>
@@ -38,6 +36,9 @@
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
+      },
+      push (link) {
+        this.$router.push(link)
       }
     }
   }
@@ -107,7 +108,7 @@
     margin-bottom: 10px;
   }
 
-  .doc button {
+  /* .doc button {
     font-size: .8em;
     cursor: pointer;
     outline: none;
@@ -124,5 +125,5 @@
   .doc button.alt {
     color: #42b983;
     background-color: transparent;
-  }
+  } */
 </style>
