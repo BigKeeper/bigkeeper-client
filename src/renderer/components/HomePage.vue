@@ -29,9 +29,8 @@
       <el-container>
         <el-header style="text-align: right; font-size: 12px">
           <el-collum>
-            <div class="inline">
-              <div class="search-input">
-                <el-input placeholder="Please input a name" v-model="input5" class="input-with-select">
+              <div class="left">
+                <el-input placeholder="Please input a name" v-model="input5" class="input-with-select" autosize="true">
                   <el-select v-model="select" slot="prepend" placeholder="请选择">
                     <el-option label="Feature" value="1"></el-option>
                     <el-option label="Hotfix" value="2"></el-option>
@@ -39,10 +38,9 @@
                   <el-button slot="append" icon="el-icon-search"></el-button>
                 </el-input>
               </div>
-              <div class="inline">
+              <div class="left">
                 <el-button type="primary" icon="el-icon-plus"></el-button>
               </div>
-            </div>
           </el-collum>
         </el-header>
         <el-main>
@@ -89,12 +87,8 @@ export default {
   color: #333;
 }
 
-.search-input {
-  width: 50%
-}
-
-.inline {
-    display: inline;
+.left {
+    float: left;
 }
 
 </style>
