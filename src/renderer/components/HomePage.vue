@@ -1,9 +1,10 @@
 <template>
   <div>
-    <el-container style="border: 1px solid #eee">
+    <el-container style="position:fixed; top: 0; left: 0; right: 0; height: 100%">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <el-container style="height: 160px; border: 1px solid #eee">
-        </el-container>
+        <div style="height: 160px; border: 1px solid #eee">
+          <project-information></project-information>
+        </div>
         <el-menu :default-openeds="['1', '3']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-view"></i>Feature</template>
@@ -32,11 +33,7 @@
         <el-header style="text-align: right; font-size: 12px; display: flex;">
 
             <div style="flex: 1;">
-              <el-input placeholder="Please input a name" v-model="input5" class="input-with-select" autosize="true">
-                <el-select v-model="select" slot="prepend" placeholder="请选择">
-                  <el-option label="Feature" value="1"></el-option>
-                  <el-option label="Hotfix" value="2"></el-option>
-                </el-select>
+              <el-input placeholder="Please input a name" autosize="true">
                 <el-button slot="append" icon="el-icon-search"></el-button>
               </el-input>
             </div>
@@ -57,9 +54,10 @@
 
 <script>
 import ElementUI from 'element-ui'
+import ProjectInformation from './HomePage/ProjectInformation'
 export default {
   name: 'home-page',
-  components: { ElementUI }
+  components: { ElementUI, ProjectInformation }
 }
 </script>
 
