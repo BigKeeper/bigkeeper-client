@@ -20,7 +20,7 @@
         <div class="doc">
           <div class="title alt">About us</div>
           <el-button @click="open('https://electron.atom.io/docs/')" round>Github</el-button>
-          <el-button @click="open('https://vuejs.org/v2/guide/')" round>Vue.js</el-button>
+          <el-button @click="big()" round>Vue.js</el-button>
         </div>
       </div>
     </main>
@@ -29,7 +29,7 @@
 
 <script>
   import SystemInformation from './LandingPage/SystemInformation'
-
+  import CommandLine from '../../utils/command_line.js'
   export default {
     name: 'landing-page',
     components: { SystemInformation },
@@ -39,7 +39,8 @@
       },
       push (link) {
         this.$router.push(link)
-      }
+      },
+      big: CommandLine.big
     }
   }
 </script>
