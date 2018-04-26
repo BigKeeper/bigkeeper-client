@@ -5,7 +5,7 @@
         <div style="height: 160px; border: 1px solid #eee">
           <project-information></project-information>
         </div>
-        <el-menu :default-openeds="['1', '3']">
+        <el-menu :default-openeds="['3', '4']">
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-view"></i>Feature</template>
             <el-menu-item index="1-1">2.9.0_mmoaay_hello</el-menu-item>
@@ -28,26 +28,7 @@
           </el-submenu>
         </el-menu>
       </el-aside>
-
-      <el-container>
-        <el-header style="text-align: right; font-size: 12px; display: flex;">
-
-            <div style="flex: 1;">
-              <el-input placeholder="Please input a name" autosize="true">
-                <el-button slot="append" icon="el-icon-search"></el-button>
-              </el-input>
-            </div>
-
-            <div style="flex: none; width: 110px;">
-              <el-button type="primary" icon="el-icon-plus" circle></el-button>
-              <el-button icon="el-icon-setting" circle></el-button>
-            </div>
-
-        </el-header>
-        <el-main>
-
-        </el-main>
-      </el-container>
+      <router-view></router-view>
     </el-container>
   </div>
 </template>

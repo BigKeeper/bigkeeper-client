@@ -15,7 +15,7 @@
           <p>
             Efficiency improvement for iOS&Android modular development..
           </p>
-          <el-button type="primary" @click="push('/home')" round>Add your first project</el-button><br><br>
+          <el-button type="primary" @click="push('/home/feature_hotfix')" round>Add your first project</el-button><br><br>
         </div>
         <div class="doc">
           <div class="title alt">About us</div>

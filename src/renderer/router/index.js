@@ -13,7 +13,19 @@ export default new Router({
     {
       path: '/home',
       name: 'home-page',
-      component: require('@/components/HomePage').default
+      component: require('@/components/HomePage').default,
+      children: [
+        {
+          path: 'add_feature_hotfix',
+          name: 'add-feature-hotfix-page',
+          component: require('@/components/HomePage/FeatureHotfix/AddFeatureHotfixPage').default
+        },
+        {
+          path: 'feature_hotfix',
+          name: 'feature-hotfix-page',
+          component: require('@/components/HomePage/FeatureHotfix/FeatureHotfixPage').default
+        }
+      ]
     },
     {
       path: '*',
