@@ -29,7 +29,7 @@
 
 <script>
   import SystemInformation from './LandingPage/SystemInformation'
-  import CommandLine from '../../utils/command_line.js'
+  import CommandLine from '../../util/command_line.js'
   export default {
     name: 'landing-page',
     components: { SystemInformation },

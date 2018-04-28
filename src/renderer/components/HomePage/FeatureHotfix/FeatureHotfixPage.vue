@@ -14,6 +14,21 @@
         </div>
     </el-header>
     <el-main>
+      <el-card class="box-card" shadow="hover">
+        <el-badge :value="12" class="item">
+          <el-button size="small" round>changes</el-button>
+        </el-badge>
+        <el-badge :value="12" class="item">
+          <el-button size="small" round>commits</el-button>
+        </el-badge>
+        <el-badge :value="12" class="item">
+          <el-button size="small" round>stash</el-button>
+        </el-badge>
+        <div slot="header" class="clearfix">
+          <span>LPDOrderModule</span>
+          <el-button style="float: right; padding: 3px 0" type="text">Pull request</el-button>
+        </div>
+      </el-card>
     </el-main>
   </el-container>
 </template>

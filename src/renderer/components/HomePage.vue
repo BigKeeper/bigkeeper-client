@@ -5,7 +5,7 @@
         <div style="height: 160px; border: 1px solid #eee">
           <project-information></project-information>
         </div>
-        <el-menu :default-openeds="['3', '4']">
+        <el-menu>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-view"></i>Feature</template>
             <el-menu-item index="1-1">2.9.0_mmoaay_hello</el-menu-item>
