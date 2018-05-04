@@ -1,9 +1,18 @@
 <template>
-  <el-form ref="form" :model="form" label-width="80px">
-    <el-form-item label="活动名称">
+  <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
+    <el-form-item label="Name">
       <el-input v-model="form.name"></el-input>
     </el-form-item>
-    <el-form-item label="活动区域">
+    <el-form-item label="Path">
+      <el-input v-model="form.name"></el-input>
+    </el-form-item>
+    <el-form-item label="Type" style="margin-top: 20px">
+      <el-radio-group v-model="radio.type" size="small">
+        <el-radio-button label="Feature"></el-radio-button>
+        <el-radio-button label="Hotfix"></el-radio-button>
+      </el-radio-group>
+    </el-form-item>
+    <el-form-item label="活动区域" style="margin-top: 20px">
       <el-select v-model="form.region" placeholder="请选择活动区域">
         <el-option label="区域一" value="shanghai"></el-option>
         <el-option label="区域二" value="beijing"></el-option>
@@ -58,13 +67,16 @@
           type: [],
           resource: '',
           desc: ''
+        },
+        radio: {
+          type: 'Feature'
         }
       }
     },
     methods: {
       onSubmit () {
         console.log('submit!')
-        this.push('/home/feature_hotfix')
+        this.push('/home/develop')
       },
       push (link) {
         this.$router.push(link)

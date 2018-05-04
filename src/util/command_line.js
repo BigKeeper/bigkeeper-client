@@ -1,5 +1,4 @@
 var CommandLine = {
-
   big: function () {
     var spawn = require('child_process').spawn
     var ls = spawn('big', ['-p', '/Users/mmoaay/Documents/eleme/LPDTeamiOS', 'feature', 'start', 'hello'])

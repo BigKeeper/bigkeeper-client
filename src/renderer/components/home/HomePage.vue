@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-container style="position:fixed; top: 0; left: 0; right: 0; height: 100%">
+    <el-container class="home-container">
       <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
         <div style="height: 160px; border: 1px solid #eee">
           <project-information></project-information>
@@ -8,13 +8,13 @@
         <el-menu>
           <el-submenu index="1">
             <template slot="title"><i class="el-icon-view"></i>Feature</template>
-            <el-menu-item index="1-1">2.9.0_mmoaay_hello</el-menu-item>
-            <el-menu-item index="1-2">2.8.0_mmoaay_fuck</el-menu-item>
+            <el-menu-item index="1-1" @click="push('/home/develop')">2.9.0_mmoaay_hello</el-menu-item>
+            <el-menu-item index="1-2" @click="push('/home/develop')">2.8.0_mmoaay_fuck</el-menu-item>
           </el-submenu>
           <el-submenu index="2">
             <template slot="title"><i class="el-icon-bell"></i>Hotfix</template>
-            <el-menu-item index="2-1">2.9.0_mmoaay_hello</el-menu-item>
-            <el-menu-item index="2-2">2.8.0_mmoaay_fuck</el-menu-item>
+            <el-menu-item index="2-1" @click="push('/home/develop')">2.9.0_mmoaay_hello</el-menu-item>
+            <el-menu-item index="2-2" @click="push('/home/develop')">2.8.0_mmoaay_fuck</el-menu-item>
           </el-submenu>
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-upload"></i>Release</template>
@@ -35,23 +35,24 @@
 
 <script>
 import ElementUI from 'element-ui'
-import ProjectInformation from './HomePage/ProjectInformation'
+import ProjectInformation from '../project/ProjectInformation'
 export default {
   name: 'home-page',
-  components: { ElementUI, ProjectInformation }
+  components: { ElementUI, ProjectInformation },
+  methods: {
+    push (link) {
+      this.$router.push(link)
+    }
+  }
 }
 </script>
 
-<style>
-.el-header {
-  background-color: #B3C0D1;
-  color: #333;
-  line-height: 60px;
-}
+<style scoped>
+  .home-container {
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0; height: 100%; width: 100%;
+  }
 
-.el-aside {
-  color: #333;
-}
-
-
+  .el-aside {
+    color: #333;
+  }
 </style>
