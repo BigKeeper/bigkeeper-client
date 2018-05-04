@@ -9,7 +9,7 @@
         </div>
 
         <div style="flex: none; width: 110px;">
-          <el-button type="primary" icon="el-icon-plus" @click="dialogTableVisible = true" circle></el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="showDialog" circle></el-button>
           <el-tooltip content="Top center" placement="top">
             <el-button icon="el-icon-setting" circle></el-button>
           </el-tooltip>
@@ -22,9 +22,8 @@
         </el-col>
       </el-row>
     </el-main>
-    <el-dialog title="Start a Feature or Hotfix" :visible.sync="dialogTableVisible">
-      <develop-form></develop-form>
-    </el-dialog>
+    <develop-form v-bind:developFormVisible.sync="visible"
+              v-on:hideDialog="hideDialog"></develop-form>
   </el-container>
 </template>
 
@@ -34,24 +33,12 @@
   export default {
     data () {
       return {
-        gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        dialogTableVisible: false
+        developFormVisible: false
+      }
+    },
+    watch: {
+      developFormVisible: function (val) {
+        console.log('developFormVisible:' + val)
       }
     },
     name: 'feature-hotfix-page',
@@ -59,6 +46,16 @@
     methods: {
       push (link) {
         this.$router.push(link)
+      },
+      showDialog () {
+        console.log('showDialog old:' + this.developFormVisible)
+        this.developFormVisible = true
+        console.log('showDialog:' + this.developFormVisible)
+      },
+      hideDialog (event) {
+        console.log('hideDialog old:' + this.developFormVisible)
+        this.developFormVisible = event
+        console.log('hideDialog:' + this.developFormVisible)
       }
     }
   }
