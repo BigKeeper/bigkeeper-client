@@ -8,12 +8,19 @@ export default new Router({
     {
       path: '/',
       name: 'landing-page',
-      component: require('@/components/LandingPage').default
+      component: require('@/components/landing/LandingPage').default
     },
     {
       path: '/home',
       name: 'home-page',
-      component: require('@/components/HomePage').default
+      component: require('@/components/home/HomePage').default,
+      children: [
+        {
+          path: 'develop',
+          name: 'develop-page',
+          component: require('@/components/develop/DevelopPage').default
+        }
+      ]
     },
     {
       path: '*',
