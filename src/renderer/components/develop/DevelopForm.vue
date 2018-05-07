@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Start a Feature/Hotfix" :visible.sync="dialogVisible" :before-close="handleClose"  width="80%">
+  <el-dialog title="Start a Feature/Hotfix" :visible.sync="visible" :before-close="handleClose" width="80%">
     <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
@@ -16,7 +16,7 @@
       <el-form-item label="Modules" style="margin-top: 20px">
         <el-transfer
           filterable
-          :filter-method="filterMethod"
+          :filter-method="filterModules"
           filter-placeholder="Please input a name"
           v-model="results"
           :data="modules"
@@ -34,15 +34,19 @@
 <script>
   export default {
     props: {
-      developFormVisible: Boolean
+      dfvisible: Boolean
     },
-    watch: {
-      developFormVisible: function (val) {
-        console.log('cccccc:' + val)
-        this.dialogVisible = val
-      },
-      dialogVisible: function (val) {
-        console.log('aaaaa:' + this.dialogVisible)
+    computed: {
+      visible: {
+        // getter
+        get: function () {
+          return this.dfvisible
+        },
+        // setter
+        set: function (newValue) {
+          console.log('newValue')
+          this.$emit('update:dfvisible', newValue)
+        }
       }
     },
     data () {
@@ -58,7 +62,6 @@
         return data
       }
       return {
-        dialogVisible: false,
         form: {
           name: '',
           region: '',
@@ -74,7 +77,7 @@
         },
         modules: generateModules(),
         results: [],
-        filterMethod (query, item) {
+        filterModules (query, item) {
           return item.label.indexOf(query) > -1
         }
       }
@@ -82,16 +85,14 @@
     methods: {
       handleClose (done) {
         done()
-        this.dialogVisible = false
-        console.log('handleClose!')
-        this.$emit('hideDialog', this.dialogVisible)
+        this.visible = false
       },
       onSubmit () {
-        this.dialogVisible = false
+        this.visible = false
         this.push('/home/develop')
       },
       onCancel () {
-        this.dialogVisible = false
+        this.visible = false
       },
       push (link) {
         this.$router.push(link)

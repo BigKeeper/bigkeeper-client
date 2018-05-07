@@ -15,7 +15,7 @@
           <p>
             Efficiency improvement for iOS&Android modular development..
           </p>
-          <el-button type="primary" @click="projectFormVisible = true" round>Add your first project</el-button><br><br>
+          <el-button type="primary" @click="pfvisible = true" round>Add your first project</el-button><br><br>
         </div>
         <div class="doc">
           <div class="title alt">About us</div>
@@ -25,9 +25,7 @@
       </div>
     </main>
 
-    <el-dialog title="Add new project" :visible.sync="projectFormVisible" width="80%">
-      <project-form></project-form>
-    </el-dialog>
+    <project-form v-bind:pfvisible.sync="pfvisible"></project-form>
   </div>
 </template>
 
@@ -39,7 +37,7 @@
     name: 'landing-page',
     data () {
       return {
-        projectFormVisible: false
+        pfvisible: false
       }
     },
     components: { SystemInformation, ProjectForm },
@@ -49,6 +47,10 @@
       },
       push (link) {
         this.$router.push(link)
+      },
+      update (pfvisible) {
+        console.log(pfvisible)
+        this.pfvisible = pfvisible
       },
       big: CommandLine.big
     }

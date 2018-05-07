@@ -6,16 +6,14 @@
           <project-information></project-information>
         </div>
         <el-menu>
-          <el-submenu index="1">
-            <template slot="title"><i class="el-icon-view"></i>Feature</template>
-            <el-menu-item index="1-1" @click="push('/home/develop')">2.9.0_mmoaay_hello</el-menu-item>
-            <el-menu-item index="1-2" @click="push('/home/develop')">2.8.0_mmoaay_fuck</el-menu-item>
-          </el-submenu>
-          <el-submenu index="2">
-            <template slot="title"><i class="el-icon-bell"></i>Hotfix</template>
-            <el-menu-item index="2-1" @click="push('/home/develop')">2.9.0_mmoaay_hello</el-menu-item>
-            <el-menu-item index="2-2" @click="push('/home/develop')">2.8.0_mmoaay_fuck</el-menu-item>
-          </el-submenu>
+          <el-menu-item index="1" @click="push('/home/develop')">
+            <i class="el-icon-view"></i>
+            <span slot="title">Feature</span>
+          </el-menu-item>
+          <el-menu-item index="2" @click="push('/home/develop')">
+            <i class="el-icon-bell"></i>
+            <span slot="title">Hotfix</span>
+          </el-menu-item>
           <el-submenu index="3">
             <template slot="title"><i class="el-icon-upload"></i>Release</template>
             <el-menu-item index="3-1"><i class="el-icon-menu"></i>Modules</el-menu-item>

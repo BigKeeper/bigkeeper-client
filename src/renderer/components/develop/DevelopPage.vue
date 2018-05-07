@@ -3,13 +3,13 @@
     <el-header style="text-align: right; font-size: 12px; display: flex;">
 
         <div style="flex: 1;">
-          <el-input placeholder="Please input a name" autosize="true">
+          <el-input placeholder="Please input a name">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </div>
 
         <div style="flex: none; width: 110px;">
-          <el-button type="primary" icon="el-icon-plus" @click="showDialog" circle></el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
           <el-tooltip content="Top center" placement="top">
             <el-button icon="el-icon-setting" circle></el-button>
           </el-tooltip>
@@ -22,8 +22,7 @@
         </el-col>
       </el-row>
     </el-main>
-    <develop-form v-bind:developFormVisible.sync="visible"
-              v-on:hideDialog="hideDialog"></develop-form>
+    <develop-form v-bind:dfvisible.sync="dfvisible"></develop-form>
   </el-container>
 </template>
 
@@ -33,12 +32,7 @@
   export default {
     data () {
       return {
-        developFormVisible: false
-      }
-    },
-    watch: {
-      developFormVisible: function (val) {
-        console.log('developFormVisible:' + val)
+        dfvisible: false
       }
     },
     name: 'feature-hotfix-page',
@@ -47,15 +41,9 @@
       push (link) {
         this.$router.push(link)
       },
-      showDialog () {
-        console.log('showDialog old:' + this.developFormVisible)
-        this.developFormVisible = true
-        console.log('showDialog:' + this.developFormVisible)
-      },
-      hideDialog (event) {
-        console.log('hideDialog old:' + this.developFormVisible)
-        this.developFormVisible = event
-        console.log('hideDialog:' + this.developFormVisible)
+      update (dfvisible) {
+        console.log(dfvisible)
+        this.dfvisible = dfvisible
       }
     }
   }
