@@ -3,13 +3,13 @@
     <el-header style="text-align: right; font-size: 12px; display: flex;">
 
         <div style="flex: 1;">
-          <el-input placeholder="Please input a name" autosize="true">
+          <el-input placeholder="Please input a name">
             <el-button slot="append" icon="el-icon-search"></el-button>
           </el-input>
         </div>
 
         <div style="flex: none; width: 110px;">
-          <el-button type="primary" icon="el-icon-plus" @click="dialogTableVisible = true" circle></el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
           <el-tooltip content="Top center" placement="top">
             <el-button icon="el-icon-setting" circle></el-button>
           </el-tooltip>
@@ -22,9 +22,7 @@
         </el-col>
       </el-row>
     </el-main>
-    <el-dialog title="Start a Feature or Hotfix" :visible.sync="dialogTableVisible">
-      <develop-form></develop-form>
-    </el-dialog>
+    <develop-form v-bind:dfvisible.sync="dfvisible"></develop-form>
   </el-container>
 </template>
 
@@ -34,24 +32,7 @@
   export default {
     data () {
       return {
-        gridData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }],
-        dialogTableVisible: false
+        dfvisible: false
       }
     },
     name: 'feature-hotfix-page',
@@ -59,6 +40,10 @@
     methods: {
       push (link) {
         this.$router.push(link)
+      },
+      update (dfvisible) {
+        console.log(dfvisible)
+        this.dfvisible = dfvisible
       }
     }
   }
