@@ -8,22 +8,17 @@ export default new Router({
     {
       path: '/',
       name: 'landing-page',
-      component: require('@/components/LandingPage').default
+      component: require('@/components/landing/LandingPage').default
     },
     {
       path: '/home',
       name: 'home-page',
-      component: require('@/components/HomePage').default,
+      component: require('@/components/home/HomePage').default,
       children: [
         {
-          path: 'add_feature_hotfix',
-          name: 'add-feature-hotfix-page',
-          component: require('@/components/HomePage/FeatureHotfix/AddFeatureHotfixPage').default
-        },
-        {
-          path: 'feature_hotfix',
-          name: 'feature-hotfix-page',
-          component: require('@/components/HomePage/FeatureHotfix/FeatureHotfixPage').default
+          path: 'develop',
+          name: 'develop-page',
+          component: require('@/components/develop/DevelopPage').default
         }
       ]
     },

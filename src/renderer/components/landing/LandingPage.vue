@@ -15,7 +15,7 @@
           <p>
             Efficiency improvement for iOS&Android modular development..
           </p>
-          <el-button type="primary" @click="push('/home/feature_hotfix')" round>Add your first project</el-button><br><br>
+          <el-button type="primary" @click="pfvisible = true" round>Add your first project</el-button><br><br>
         </div>
         <div class="doc">
           <div class="title alt">About us</div>
@@ -24,21 +24,33 @@
         </div>
       </div>
     </main>
+
+    <project-form v-bind:pfvisible.sync="pfvisible"></project-form>
   </div>
 </template>
 
 <script>
-  import SystemInformation from './LandingPage/SystemInformation'
-  import CommandLine from '../../utils/command_line.js'
+  import SystemInformation from './SystemInformation'
+  import ProjectForm from '../project/ProjectForm'
+  import CommandLine from '../../../util/command_line.js'
   export default {
     name: 'landing-page',
-    components: { SystemInformation },
+    data () {
+      return {
+        pfvisible: false
+      }
+    },
+    components: { SystemInformation, ProjectForm },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
       },
       push (link) {
         this.$router.push(link)
+      },
+      update (pfvisible) {
+        console.log(pfvisible)
+        this.pfvisible = pfvisible
       },
       big: CommandLine.big
     }
