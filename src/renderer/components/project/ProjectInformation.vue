@@ -1,9 +1,8 @@
 <template>
   <div>
-    <div style="text-align: center; margin-top:5px" @click="psgvisible = true">
+    <div style="text-align: center;" @click="psgvisible = true">
       <el-button type="text" @click>
-        <img width="100" height="100" style="border-radius: 50%" src="~@/assets/project_icon_ios.png">
-        <div style="margin-top:10px">LPDTeam</div>
+        <img width="36px" height="36px" style="border-radius: 50%" src="~@/assets/project_icon_ios.png">
       </el-button>
     </div>
     <project-switch-page v-bind:psgvisible.sync="psgvisible"></project-switch-page>
@@ -15,12 +14,6 @@
 
   export default {
     components: { ProjectSwitchPage },
-    methods: {
-      update (psgvisible) {
-        console.log(psgvisible)
-        this.psgvisible = psgvisible
-      }
-    },
     data () {
       return {
         psgvisible: false,

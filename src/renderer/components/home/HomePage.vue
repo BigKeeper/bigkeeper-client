@@ -1,26 +1,26 @@
 <template>
   <div>
     <el-container class="home-container">
-      <el-aside width="200px" style="background-color: rgb(238, 241, 246)">
-        <div style="height: 160px; border: 1px solid #eee">
+      <el-aside width="63px" style="background-color:#545c64">
+        <div style="height: 60px">
           <project-information></project-information>
         </div>
-        <el-menu>
+        <el-menu :collapse=true background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
           <el-menu-item index="1" @click="push('/home/develop')">
             <i class="el-icon-view"></i>
             <span slot="title">Feature</span>
           </el-menu-item>
-          <el-menu-item index="2" @click="push('/home/develop')">
+          <el-menu-item index="2" @click="push('/landing')">
             <i class="el-icon-bell"></i>
             <span slot="title">Hotfix</span>
           </el-menu-item>
           <el-submenu index="3">
-            <template slot="title"><i class="el-icon-upload"></i>Release</template>
+            <template slot="title"><i class="el-icon-upload"></i></template>
             <el-menu-item index="3-1"><i class="el-icon-menu"></i>Modules</el-menu-item>
             <el-menu-item index="3-2"><i class="el-icon-mobile-phone"></i>Home</el-menu-item>
           </el-submenu>
           <el-submenu index="4">
-            <template slot="title"><i class="el-icon-goods"></i>Toolbox</template>
+            <template slot="title"><i class="el-icon-goods"></i></template>
             <el-menu-item index="4-1"><i class="el-icon-picture"></i>Images</el-menu-item>
             <el-menu-item index="4-2"><i class="el-icon-document"></i>Podfile</el-menu-item>
           </el-submenu>

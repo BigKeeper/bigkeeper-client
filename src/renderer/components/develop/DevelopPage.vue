@@ -1,33 +1,26 @@
 <template>
   <el-container>
-    <el-header style="text-align: right; font-size: 12px; display: flex;">
-
-        <div style="flex: 1;">
-          <el-input placeholder="Please input a name">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-        </div>
-
-        <div style="flex: none; width: 110px;">
-          <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
-          <el-tooltip content="Top center" placement="top">
-            <el-button icon="el-icon-setting" circle></el-button>
-          </el-tooltip>
-        </div>
-    </el-header>
-    <el-main>
-      <el-row :gutter="12" v-for="(i, index) in 2" :key="i">
-        <el-col :span="24" v-for="(j, index) in 4" :key="j" class="row">
-          <module-information></module-information>
-        </el-col>
-      </el-row>
-    </el-main>
+    <el-aside style="width:280px; background-color:#f5f7fa">
+      <el-header style="text-align: right; display: flex;">
+          <div style="flex: 1; font-size:12px;">
+            <el-input prefix-icon="el-icon-search" placeholder="Searcher">
+            </el-input>
+          </div>
+          <div style="flex: none; width: 55px;">
+            <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
+          </div>
+      </el-header>
+      <el-menu>
+        <el-menu-item index="1" @click="push('/home/develop/info')">2.8.8_mmoaay_hello_world</el-menu-item>
+      </el-menu>
+    </el-aside>
+    <router-view></router-view>
     <develop-form v-bind:dfvisible.sync="dfvisible"></develop-form>
   </el-container>
 </template>
 
 <script>
-  import ModuleInformation from '../common/ModuleInformation'
+  import DevelopInfoPage from './DevelopInfoPage'
   import DevelopForm from './DevelopForm'
   export default {
     data () {
@@ -35,15 +28,11 @@
         dfvisible: false
       }
     },
-    name: 'feature-hotfix-page',
-    components: { ModuleInformation, DevelopForm },
+    name: 'develop-page',
+    components: { DevelopInfoPage, DevelopForm },
     methods: {
       push (link) {
         this.$router.push(link)
-      },
-      update (dfvisible) {
-        console.log(dfvisible)
-        this.dfvisible = dfvisible
       }
     }
   }

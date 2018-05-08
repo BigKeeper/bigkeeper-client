@@ -48,10 +48,6 @@
       push (link) {
         this.$router.push(link)
       },
-      update (pfvisible) {
-        console.log(pfvisible)
-        this.pfvisible = pfvisible
-      },
       big: CommandLine.big
     }
   }

@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Add new project" :visible.sync="visible" :before-close="handleClose" width="80%">
+  <el-dialog title="Add new project" :visible.sync="visible" width="80%">
     <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
@@ -92,10 +92,6 @@
       }
     },
     methods: {
-      handleClose (done) {
-        done()
-        this.visible = false
-      },
       onSubmit () {
         this.visible = false
         this.push('/home/develop')

@@ -18,7 +18,15 @@ export default new Router({
         {
           path: 'develop',
           name: 'develop-page',
-          component: require('@/components/develop/DevelopPage').default
+          component: require('@/components/develop/DevelopPage').default,
+          children: [
+            {
+              path: 'info',
+              name: 'develop-info-page',
+              component: require('@/components/develop/DevelopInfoPage').default
+
+            }
+          ]
         }
       ]
     },

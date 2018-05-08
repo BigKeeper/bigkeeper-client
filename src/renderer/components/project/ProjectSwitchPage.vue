@@ -1,5 +1,5 @@
 <template>
-  <el-dialog title="Switch project" :visible.sync="visible" :before-close="handleClose" width="80%">
+  <el-dialog title="Switch project" :visible.sync="visible" width="80%">
     <el-header style="text-align: right; font-size: 12px; display: flex;">
 
         <div style="flex: 1;">
@@ -87,10 +87,6 @@
       }
     },
     methods: {
-      handleClose (done) {
-        done()
-        this.visible = false
-      },
       onSubmit () {
         this.visible = false
         this.push('/home/develop')
