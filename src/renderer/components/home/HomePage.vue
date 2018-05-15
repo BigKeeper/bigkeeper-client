@@ -5,7 +5,7 @@
         <div style="height: 60px">
           <project-information></project-information>
         </div>
-        <el-menu :collapse=true background-color="#545c64" text-color="#fff" active-text-color="#ffd04b">
+        <el-menu :collapse=true background-color="#545c64" text-color="#fff" active-text-color="#ffd04b" default-active="1">
           <el-menu-item index="1" @click="push('/home/develop')">
             <i class="el-icon-view"></i>
             <span slot="title">Feature</span>
@@ -24,6 +24,10 @@
             <el-menu-item index="4-1"><i class="el-icon-picture"></i>Images</el-menu-item>
             <el-menu-item index="4-2"><i class="el-icon-document"></i>Podfile</el-menu-item>
           </el-submenu>
+          <el-menu-item index="5">
+            <i class="el-icon-setting"></i>
+            <span slot="title">Feature</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <router-view></router-view>

@@ -1,17 +1,11 @@
 <template>
-  <el-dialog title="Start a Feature/Hotfix" :visible.sync="visible" width="80%">
+  <el-dialog title="Start a Feature" :visible.sync="visible" width="80%">
     <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
       <el-form-item label="Name">
         <el-input v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="Full name">
         <div>2.9.5_mmoaay_heiheihei<el-button class="el-icon-info" style="margin-left: 10px" type="text"></el-button></div>
-      </el-form-item>
-      <el-form-item label="Type" style="margin-top: 20px">
-        <el-radio-group v-model="radio.type" size="medium">
-          <el-radio-button label="Feature"></el-radio-button>
-          <el-radio-button label="Hotfix"></el-radio-button>
-        </el-radio-group>
       </el-form-item>
       <el-form-item label="Modules" style="margin-top: 20px">
         <el-transfer

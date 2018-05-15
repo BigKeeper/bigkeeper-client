@@ -1,5 +1,5 @@
 <template lang="html">
-  <el-card shadow="always">
+  <el-card shadow="hover">
     <div slot="header" class="clearfix">
     <!-- <div slot="header" class="clearfix" style="background-color:#66b1ff"> -->
       <span>LPDOrderModule</span>

@@ -2,7 +2,7 @@
   <el-container>
     <el-main>
       <el-row :gutter="12" v-for="(i, index) in 2" :key="i">
-        <el-col :span="24" v-for="(j, index) in 4" :key="j" class="row">
+        <el-col :span="24" v-for="(j, index) in 8" :key="j" class="row">
           <module-information></module-information>
         </el-col>
       </el-row>
