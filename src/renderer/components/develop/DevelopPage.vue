@@ -65,18 +65,20 @@
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel'
         }).then(() => {
-          CommandLine.post(this.command.switch_to)
+          this.post(this.command.switch_to)
         }).catch(() => {
         })
       },
       loadData () {
         this.branches = []
         this.loading = true
-        CommandLine.get(this.command.list, (data) => {
+        this.get(this.command.list, (data) => {
           this.branches = data
           this.loading = false
         })
-      }
+      },
+      get: CommandLine.get,
+      post: CommandLine.post
     },
     mounted () {
       this.loadData()
