@@ -24,9 +24,13 @@ export default new Router({
               path: 'info',
               name: 'develop-info-page',
               component: require('@/components/develop/DevelopInfoPage').default
-
             }
           ]
+        },
+        {
+          path: 'settings',
+          name: 'settings-page',
+          component: require('@/components/settings/SettingsPage').default
         }
       ]
     },

@@ -1,54 +1,51 @@
 <template>
   <el-dialog title="Switch project" :visible.sync="visible" width="80%">
     <el-header style="text-align: right; font-size: 12px; display: flex;">
-
-        <div style="flex: 1;">
-          <el-input placeholder="Please input a name">
-            <el-button slot="append" icon="el-icon-search"></el-button>
-          </el-input>
-        </div>
-
-        <div style="flex: none; width: 110px;">
-          <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
-          <el-tooltip content="Top center" placement="top">
-            <el-button icon="el-icon-setting" circle></el-button>
-          </el-tooltip>
+        <div style="flex: 1;"></div>
+        <div style="flex: none; width: 55px;">
+          <el-button type="primary" icon="el-icon-plus" @click="pfvisible = true" circle></el-button>
         </div>
     </el-header>
     <el-table
-    :data="tableData"
+    :data="projects"
     style="width: 100%">
     <el-table-column
       prop="name"
-      label="姓名"
+      label="Name"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="date"
-      label="日期"
+      prop="user"
+      label="User"
       width="180">
     </el-table-column>
     <el-table-column
-      prop="address"
-      label="地址">
+      prop="path"
+      label="Path">
     </el-table-column>
-    <el-table-column label="操作">
+    <el-table-column label="Operation">
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit"></el-button>
+          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" round></el-button>
         <el-button
           size="mini"
           type="danger"
-          @click="handleDelete(scope.$index, scope.row)" icon="el-icon-delete"></el-button>
+          @click="handleDelete(scope.$index, scope.row)" icon="el-icon-delete" round></el-button>
       </template>
     </el-table-column>
   </el-table>
+  <project-form v-bind:pfvisible.sync="pfvisible"></project-form>
   </el-dialog>
 </template>
 
 <script>
+  import ProjectService from '../../../service/project_service.js'
+  import ProjectForm from './ProjectForm'
   export default {
+    mounted () {
+      this.projects = ProjectService.projects
+    },
     props: {
       psgvisible: Boolean
     },
@@ -67,25 +64,11 @@
     },
     data () {
       return {
-        tableData: [{
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }, {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        }]
+        projects: [],
+        pfvisible: false
       }
     },
+    components: { ProjectForm },
     methods: {
       onSubmit () {
         this.visible = false

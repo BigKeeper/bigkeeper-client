@@ -36,7 +36,7 @@ var CommandLine = {
         })
         return
       }
-      console.log(stdout)
+      // console.log(stdout)
       completion(JSON.parse(stdout))
     })
   }

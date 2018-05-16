@@ -24,7 +24,7 @@
             <el-menu-item index="4-1"><i class="el-icon-picture"></i>Images</el-menu-item>
             <el-menu-item index="4-2"><i class="el-icon-document"></i>Podfile</el-menu-item>
           </el-submenu>
-          <el-menu-item index="5">
+          <el-menu-item index="5" @click="push('/home/settings')">
             <i class="el-icon-setting"></i>
             <span slot="title">Feature</span>
           </el-menu-item>
@@ -40,6 +40,9 @@ import ElementUI from 'element-ui'
 import ProjectInformation from '../project/ProjectInformation'
 export default {
   name: 'home-page',
+  mounted () {
+    this.$router.push('/home/develop')
+  },
   components: { ElementUI, ProjectInformation },
   methods: {
     push (link) {
