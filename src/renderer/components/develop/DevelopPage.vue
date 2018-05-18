@@ -1,23 +1,24 @@
 <template>
   <el-container>
-    <el-aside v-loading="loading" style="width: 280px; background-color: #f5f7fa;">
-      <el-menu style="top: 64px; width: 278px;">
-        <el-menu-item style="display: flex;" v-for="(value, index) in filteredBranches" :index=index.toString()>
-          <div style="flex: 1; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;" @click="push('/home/develop/info')">{{ value.home_branche_name }}</div>
-          <div style="flex: none; width: 40px; text-align: right;">
-            <el-button size="mini" icon="el-icon-sort" @click="switchTo()" circle></el-button>
-            <!-- <el-button style="width: 30px; height: 30px; text-align:center;" icon="el-icon-sort" @click="switchTo()" circle></el-button> -->
-          </div>
+    <el-aside v-loading="loading" class="el-aside" style="width: 280px;">
+      <el-menu class="el-menu">
+        <el-menu-item class="el-menu-item" v-for="(value, index) in filteredBranches" :index=index.toString()>
+          <el-col :span="16"><div class="el-menu-item-title" @click="push(index)">{{ value.home_branche_name }}</div></el-col>
+          <el-col :span="8">
+            <el-badge :value="value.involve_modules.length.toString()" class="el-menu-item-badge">
+              <el-button size="mini" icon="el-icon-plus" class="el-menu-item-button" @click="switchTo()" circle></el-button>
+            </el-badge>
+          </el-col>
         </el-menu-item>
       </el-menu>
-      <el-header style="text-align: right; display: flex; position: absolute; width:280px; top:0px">
-        <div style="flex: 1;">
+      <el-header class="el-header">
+        <div class="el-header-search">
           <el-input prefix-icon="el-icon-search" placeholder="Search" @input="change">
           </el-input>
         </div>
-        <div style="flex: none; width: 110px;">
-          <el-button size="mini" icon="el-icon-refresh" @click="loadData()" circle></el-button>
-          <el-button type="primary" size="mini" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
+        <div class="el-header-button">
+          <el-button size="mini" icon="el-icon-refresh" @click="refresh()" circle></el-button>
+          <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
         </div>
       </el-header>
     </el-aside>
@@ -33,15 +34,29 @@
   import ProjectService from '../../../service/project_service.js'
 
   export default {
+    mounted () {
+      this.refresh()
+    },
+    watch: {
+      '$route' (to, from) {
+        this.$router.go(0)
+
+        if (to.name === 'develop-page') {
+          this.refresh()
+        }
+      }
+    },
     data () {
       return {
-        dfvisible: false,
-        loading: true,
         project: {
           name: '',
           path: '',
-          user: ''
+          user: '',
+          type: 'feature',
+          branch: ''
         },
+        dfvisible: false,
+        loading: true,
         command: {
           switchTo: {
             name: 'big',
@@ -76,9 +91,19 @@
           this.filteredBranches = arr
         }
       },
-      push (link) {
-        console.log('push')
-        this.$router.push(link)
+      push (index) {
+        let branch = this.filteredBranches[index]
+        console.log(branch)
+        this.$router.push('*')
+        this.$router.push(
+          {
+            path: '/home/develop/info',
+            name: 'develop-info-page',
+            params: {
+              branch: JSON.stringify(branch)
+            }
+          }
+        )
       },
       switchTo () {
         console.log('switchTo')
@@ -90,14 +115,19 @@
         }).catch(() => {
         })
       },
-      loadData () {
+      refresh () {
+        this.project = ProjectService.current()
+
         this.filteredBranches = []
         this.branches = []
         this.loading = true
 
-        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' feature list json")
+        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
 
-        this.get("big -u '" + this.project.user + "' -p '" + this.project.path + "' feature list json", (data) => {
+        this.get("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
+          if (data === null) {
+            data = []
+          }
           this.filteredBranches = data
           this.branches = data
           this.loading = false
@@ -105,10 +135,6 @@
       },
       get: CommandLine.get,
       post: CommandLine.post
-    },
-    mounted () {
-      this.project = ProjectService.current
-      this.loadData()
     }
   }
 </script>
@@ -122,10 +148,59 @@
     margin-bottom: 24px;
   }
 
+  .el-aside {
+    background-color: #f5f7fa;
+  }
+
   .el-header {
     background-color: #B3C0D1;
     color: #333;
     line-height: 60px;
+    text-align: right;
+    display: flex;
+    position: absolute;
+    width:280px;
+    top:0px
+  }
+
+  .el-header-search {
+    flex: 1;
+  }
+
+  .el-header-button {
+    flex: none;
+    width: 110px;
+  }
+
+  .el-menu-item {
+    /* display: flex; */
+  }
+
+  .el-menu-item-title {
+    /* flex: 1; */
+    /* width: 200px; */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .el-menu {
+    top: 64px;
+    width: 278px;
+  }
+
+  .el-menu-item-badge {
+    /* padding-top: 10px; */
+    /* float:right; */
+    /* flex: none; */
+    text-align: right;
+  }
+
+  .el-menu-item-button {
+    /* margin-top: 10px; */
+    text-align: center;
+    /* width: 30px;
+    height: 30px; */
   }
 
   el-menu-item:nth-child(odd) {

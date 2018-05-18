@@ -48,7 +48,9 @@
         form: {
           name: 'LPDTeamiOS',
           path: '/Users/mmoaay/Documents/eleme/LPDTeamiOS',
-          user: 'mmoaay'
+          user: 'mmoaay',
+          type: 'feature',
+          branch: ''
         },
         radio: {
           type: 'Local'
@@ -64,9 +66,9 @@
           })
           return
         }
-        console.log('onSubmit success')
-        ProjectService.current = this.form
-        this.push('/home/develop')
+
+        ProjectService.setCurrent(this.form)
+        this.push('/home')
 
         this.visible = false
       },

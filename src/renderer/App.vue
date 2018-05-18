@@ -9,7 +9,7 @@
   export default {
     name: 'bigkeeper',
     mounted () {
-      if (ProjectService.projects.length !== 0) {
+      if (ProjectService.projects().length !== 0) {
         this.$router.push('/home')
       }
     }

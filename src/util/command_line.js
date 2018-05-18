@@ -26,17 +26,34 @@ var CommandLine = {
       })
     })
   },
+  message: function (error) {
+    var str = error.toString()
+    str = str.substring(str.indexOf('error: '))
+    str = str.substring(str.indexOf('m'))
+    str = str.substr(1, str.indexOf('.') + 1)
 
+    return str
+  },
   get: function (command, completion) {
     const { exec } = require('child_process')
     exec(command, (error, stdout, stderr) => {
       if (error) {
-        this.$alert(error, 'Error', {
+        let message = CommandLine.message(error)
+        this.$alert(message, 'Error', {
           confirmButtonText: 'Confirm'
         })
+        completion(null)
         return
       }
-      // console.log(stdout)
+      if (stderr) {
+        let message = CommandLine.message(stderr)
+        this.$alert(message, 'Error', {
+          confirmButtonText: 'Confirm'
+        })
+        completion(null)
+        return
+      }
+      console.log(stdout)
       completion(JSON.parse(stdout))
     })
   }

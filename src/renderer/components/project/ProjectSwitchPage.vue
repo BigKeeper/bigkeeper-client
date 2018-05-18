@@ -27,7 +27,7 @@
       <template slot-scope="scope">
         <el-button
           size="mini"
-          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-edit" round></el-button>
+          @click="handleEdit(scope.$index, scope.row)" icon="el-icon-sort" round></el-button>
         <el-button
           size="mini"
           type="danger"
@@ -43,11 +43,20 @@
   import ProjectService from '../../../service/project_service.js'
   import ProjectForm from './ProjectForm'
   export default {
-    mounted () {
-      this.projects = ProjectService.projects
-    },
     props: {
       psgvisible: Boolean
+    },
+    watch: {
+      psgvisible: function (val) {
+        if (val === true) {
+          this.projects = ProjectService.projects()
+        }
+      },
+      pfvisible: function (val) {
+        if (val === false) {
+          this.projects = ProjectService.projects()
+        }
+      }
     },
     computed: {
       visible: {
@@ -57,7 +66,6 @@
         },
         // setter
         set: function (newValue) {
-          console.log('newValue')
           this.$emit('update:psgvisible', newValue)
         }
       }
@@ -70,15 +78,23 @@
     },
     components: { ProjectForm },
     methods: {
-      onSubmit () {
-        this.visible = false
-        this.push('/home/develop')
-      },
       handleEdit (index, row) {
-        console.log(index, row)
+        console.log('handleEdit')
+        var project = this.projects[index]
+        ProjectService.setCurrent(project)
+        this.push('/home')
+
+        this.visible = false
       },
       handleDelete (index, row) {
-        console.log(index, row)
+        if (ProjectService.delete(index) === false) {
+          this.$message({
+            message: 'You can not delete current project',
+            type: 'warning'
+          })
+          return
+        }
+        this.projects = ProjectService.projects()
       },
       push (link) {
         this.$router.push(link)
