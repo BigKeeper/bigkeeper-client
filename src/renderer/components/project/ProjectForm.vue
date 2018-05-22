@@ -25,7 +25,7 @@
 </template>
 
 <script>
-  import ProjectService from '../../../service/project_service.js'
+  import ProjectService from '../../../service/ProjectService.js'
   export default {
     props: {
       pfvisible: Boolean

@@ -1,22 +1,22 @@
 <template>
   <el-container>
-    <el-aside v-loading="loading" class="el-aside" style="width: 280px;">
-      <el-menu class="el-menu">
-        <el-menu-item class="el-menu-item" v-for="(value, index) in filteredBranches" :index=index.toString()>
-          <el-col :span="16"><div class="el-menu-item-title" @click="push(index)">{{ value.home_branche_name }}</div></el-col>
-          <el-col :span="8">
-            <el-badge :value="value.involve_modules.length.toString()" class="el-menu-item-badge">
-              <el-button size="mini" icon="el-icon-plus" class="el-menu-item-button" @click="switchTo()" circle></el-button>
+    <el-aside v-loading="loading" class="develop-aside">
+      <ul class="develop-menu" id="branches">
+        <li class="develop-menu-item" v-for="(value, index) in filteredBranches">
+          <span class="develop-menu-item-title" @click="push(index)">{{ value.home_branche_name }}</span>
+          <span>
+            <el-badge :hidden="value.involve_modules.length === 0" :value="value.involve_modules.length.toString()" class="develop-menu-item-badge">
+              <el-button size="mini" icon="el-icon-sort" @click="switchTo(value.home_branche_name)" round></el-button>
             </el-badge>
-          </el-col>
-        </el-menu-item>
-      </el-menu>
-      <el-header class="el-header">
-        <div class="el-header-search">
+          </span>
+        </li>
+      </ul>
+      <el-header class="develop-header">
+        <div class="develop-header-search">
           <el-input prefix-icon="el-icon-search" placeholder="Search" @input="change">
           </el-input>
         </div>
-        <div class="el-header-button">
+        <div class="develop-header-button">
           <el-button size="mini" icon="el-icon-refresh" @click="refresh()" circle></el-button>
           <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
         </div>
@@ -24,14 +24,21 @@
     </el-aside>
     <router-view></router-view>
     <develop-form v-bind:dfvisible.sync="dfvisible"></develop-form>
+    <console-page
+      v-bind:cpvisible.sync="console.cpvisible"
+      v-bind:loading="console.loading"
+      v-bind:title="console.title"
+      v-bind:message="console.message">
+    </console-page>
   </el-container>
 </template>
 
 <script>
   import DevelopInfoPage from './DevelopInfoPage'
   import DevelopForm from './DevelopForm'
-  import CommandLine from '../../../util/command_line.js'
-  import ProjectService from '../../../service/project_service.js'
+  import CommandLine from '../../../util/CommandLine.js'
+  import ProjectService from '../../../service/ProjectService.js'
+  import ConsolePage from '../common/console/ConsolePage'
 
   export default {
     mounted () {
@@ -48,6 +55,12 @@
     },
     data () {
       return {
+        console: {
+          cpvisible: false,
+          loading: true,
+          title: '',
+          message: ''
+        },
         project: {
           name: '',
           path: '',
@@ -57,24 +70,12 @@
         },
         dfvisible: false,
         loading: true,
-        command: {
-          switchTo: {
-            name: 'big',
-            params: [
-              '-p',
-              '/Users/mmoaay/Documents/eleme/LPDTeamiOS',
-              'feature',
-              'switch',
-              'hahaha'
-            ]
-          }
-        },
         branches: [],
         filteredBranches: []
       }
     },
     name: 'develop-page',
-    components: { DevelopInfoPage, DevelopForm },
+    components: { DevelopInfoPage, DevelopForm, ConsolePage },
     methods: {
       change (value) {
         if (!value) {
@@ -93,7 +94,6 @@
       },
       push (index) {
         let branch = this.filteredBranches[index]
-        console.log(branch)
         this.$router.push('*')
         this.$router.push(
           {
@@ -105,13 +105,34 @@
           }
         )
       },
-      switchTo () {
-        console.log('switchTo')
-        this.$confirm('Switch to branch?', 'Notice', {
+      switchTo (branch) {
+        this.project.branch = branch
+        this.$confirm('Switch to branch: ' + branch + '?', 'Notice', {
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel'
         }).then(() => {
-          this.post(this.command.switchTo)
+          this.console.cpvisible = true
+          this.console.loading = true
+          this.console.title = 'Switch to branch: ' + branch
+          this.console.message = ''
+          this.post({
+            name: 'big',
+            params: [
+              '-u',
+              this.project.user,
+              '-p',
+              this.project.path,
+              this.project.type,
+              'switch',
+              this.project.branch
+            ]
+          }, (message) => {
+            if (message === null) {
+              this.console.loading = false
+              return
+            }
+            this.console.message += message + '\r\n'
+          })
         }).catch(() => {
         })
       },
@@ -148,66 +169,85 @@
     margin-bottom: 24px;
   }
 
-  .el-aside {
+  .develop-aside {
+    width: 300px;
     background-color: #f5f7fa;
+    position: relative;
+    bottom: 0px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
   }
 
-  .el-header {
+  .develop-header {
     background-color: #B3C0D1;
     color: #333;
     line-height: 60px;
     text-align: right;
     display: flex;
     position: absolute;
-    width:280px;
-    top:0px
+    width: 300px;
+    top: 0px;
+    left: 0px;
+    right: 0px;
   }
 
-  .el-header-search {
+  .develop-header-search {
     flex: 1;
   }
 
-  .el-header-button {
+  .develop-header-button {
     flex: none;
     width: 110px;
   }
 
-  .el-menu-item {
-    /* display: flex; */
+  .develop-menu-item {
+    width: 300px;
+    left: 0px;
+    display: flex;
+    padding-top: 10px;
+    padding-bottom: 10px;
   }
 
-  .el-menu-item-title {
-    /* flex: 1; */
-    /* width: 200px; */
+  .develop-menu-item-title {
+    flex: 1;
+    width: 200px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-bottom: 10px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
-  .el-menu {
-    top: 64px;
-    width: 278px;
+  .develop-menu {
+    width: 300px;
+    overflow: auto;
+    position: absolute;
+    left: 0px;
+    bottom: 0px;
+    top: 60px;
+    right: 0px;
+    padding-left: 0px;
+    margin-top: 0px;
+    margin-bottom: 0px;
+    padding-top: 0px;
   }
 
-  .el-menu-item-badge {
-    /* padding-top: 10px; */
-    /* float:right; */
-    /* flex: none; */
-    text-align: right;
+  .develop-menu-item-badge {
+    margin-top: 6px;
+    margin-right: 20px;
+    margin-left: 10px;
   }
 
-  .el-menu-item-button {
-    /* margin-top: 10px; */
-    text-align: center;
-    /* width: 30px;
-    height: 30px; */
+  .develop-menu-item-button {
+    padding-left: 10px;
+    width: 30px;
+    height: 30px;
   }
 
-  el-menu-item:nth-child(odd) {
-    background-color:#ffffff;
-  }
+  #branches li:nth-of-type(odd){ background:#ffffff; }
+  #branches li:nth-of-type(even){ background:#f1f1f1; }
+  #branches li:hover { background-color:#ebf5ff; }
 
-  el-menu-item:nth-child(even) {
-    background-color:#eeeeee;
-  }
 </style>

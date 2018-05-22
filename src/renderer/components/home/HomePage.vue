@@ -38,7 +38,7 @@
 <script>
   import ElementUI from 'element-ui'
   import ProjectInformation from '../project/ProjectInformation'
-  import ProjectService from '../../../service/project_service.js'
+  import ProjectService from '../../../service/ProjectService.js'
 
   export default {
     name: 'home-page',

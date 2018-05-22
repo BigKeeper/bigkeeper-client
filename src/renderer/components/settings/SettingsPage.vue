@@ -11,7 +11,7 @@
 </template>
 
 <script>
-  import ProjectService from '../../../service/project_service.js'
+  import ProjectService from '../../../service/ProjectService.js'
 
   export default {
     name: 'setting-page',

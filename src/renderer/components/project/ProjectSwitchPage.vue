@@ -40,7 +40,7 @@
 </template>
 
 <script>
-  import ProjectService from '../../../service/project_service.js'
+  import ProjectService from '../../../service/ProjectService.js'
   import ProjectForm from './ProjectForm'
   export default {
     props: {

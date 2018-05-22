@@ -3,34 +3,29 @@ var CommandLine = {
     var spawn = require('child_process').spawn
     var ls = spawn(command.name, command.params)
     ls.stdout.on('data', (data) => {
-      // this.$message('这是一条消息提示')
-      console.log(data.toString())
-      this.$alert(data.toString(), 'Error', {
-        confirmButtonText: 'Confirm'
-      })
+      completion(CommandLine.message(data))
     })
-
     ls.stderr.on('data', (data) => {
-      // this.$message('这是一条消息提示')
-      console.log(data.toString())
-      this.$alert(data.toString(), 'Error', {
+      this.$alert(CommandLine.errorMessage(data), 'Error', {
         confirmButtonText: 'Confirm'
       })
     })
-
     ls.on('close', (code) => {
-      // this.$message('这是一条消息提示')
-      console.log(code.toString())
-      this.$alert(code.toString(), 'Error', {
-        confirmButtonText: 'Confirm'
-      })
+      completion(null)
     })
   },
-  message: function (error) {
+  message: function (data) {
+    var str = data.toString()
+    str = str.substring(str.indexOf('m'))
+    str = str.substr(1, str.indexOf('[') - 1)
+
+    return str
+  },
+  errorMessage: function (error) {
     var str = error.toString()
     str = str.substring(str.indexOf('error: '))
     str = str.substring(str.indexOf('m'))
-    str = str.substr(1, str.indexOf('.') + 1)
+    str = str.substr(1, str.indexOf('[') - 1)
 
     return str
   },
@@ -38,22 +33,21 @@ var CommandLine = {
     const { exec } = require('child_process')
     exec(command, (error, stdout, stderr) => {
       if (error) {
-        let message = CommandLine.message(error)
-        this.$alert(message, 'Error', {
+        let errorMessage = CommandLine.errorMessage(error)
+        this.$alert(errorMessage, 'Error', {
           confirmButtonText: 'Confirm'
         })
         completion(null)
         return
       }
       if (stderr) {
-        let message = CommandLine.message(stderr)
-        this.$alert(message, 'Error', {
+        let errorMessage = CommandLine.errorMessage(stderr)
+        this.$alert(errorMessage, 'Error', {
           confirmButtonText: 'Confirm'
         })
         completion(null)
         return
       }
-      console.log(stdout)
       completion(JSON.parse(stdout))
     })
   }
