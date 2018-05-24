@@ -3,12 +3,14 @@
     <el-aside v-loading="loading" class="develop-aside">
       <ul class="develop-menu" id="branches">
         <li class="develop-menu-item" v-for="(value, index) in filteredBranches">
-          <span class="develop-menu-item-title" @click="push(index)">{{ value.home_branche_name }}</span>
-          <span>
-            <el-badge :hidden="value.involve_modules.length === 0" :value="value.involve_modules.length.toString()" class="develop-menu-item-badge">
-              <el-button size="mini" icon="el-icon-sort" @click="switchTo(value.home_branche_name)" round></el-button>
-            </el-badge>
-          </span>
+          <div class="develop-menu-item-background" v-bind:class="{ active: value.home_branch_name === activeBranch, selected: value.is_current === true }">
+            <span class="develop-menu-item-title" @click="push(value)">{{ value.home_branch_name }}</span>
+            <span>
+              <el-badge :hidden="value.involve_modules.length === 0" :value="value.involve_modules.length.toString()" class="develop-menu-item-badge">
+                <el-button :disabled="value.is_current === true" size="mini" icon="el-icon-sort" @click="switchTo(value)" round></el-button>
+              </el-badge>
+            </span>
+          </div>
         </li>
       </ul>
       <el-header class="develop-header">
@@ -23,7 +25,9 @@
       </el-header>
     </el-aside>
     <router-view></router-view>
-    <develop-form v-bind:dfvisible.sync="dfvisible"></develop-form>
+    <develop-form
+      v-bind:dfvisible.sync="dfvisible">
+    </develop-form>
     <console-page
       v-bind:cpvisible.sync="console.cpvisible"
       v-bind:loading="console.loading"
@@ -37,8 +41,8 @@
   import DevelopInfoPage from './DevelopInfoPage'
   import DevelopForm from './DevelopForm'
   import CommandLine from '../../../util/CommandLine.js'
-  import ProjectService from '../../../service/ProjectService.js'
   import ConsolePage from '../common/console/ConsolePage'
+  import ProjectService from '../../../service/ProjectService.js'
 
   export default {
     mounted () {
@@ -71,7 +75,8 @@
         dfvisible: false,
         loading: true,
         branches: [],
-        filteredBranches: []
+        filteredBranches: [],
+        activeBranch: ''
       }
     },
     name: 'develop-page',
@@ -85,35 +90,35 @@
           var arr = []
           for (var i = 0; i < this.branches.length; i++) {
             let branch = this.branches[i]
-            if (reg.test(branch.home_branche_name)) {
+            if (reg.test(branch.home_branch_name)) {
               arr.push(branch)
             }
           }
           this.filteredBranches = arr
         }
       },
-      push (index) {
-        let branch = this.filteredBranches[index]
+      push (branch) {
         this.$router.push('*')
         this.$router.push(
           {
             path: '/home/develop/info',
             name: 'develop-info-page',
             params: {
-              branch: JSON.stringify(branch)
+              branch: branch,
+              project: this.project
             }
           }
         )
+        this.activeBranch = branch.home_branch_name
       },
       switchTo (branch) {
-        this.project.branch = branch
-        this.$confirm('Switch to branch: ' + branch + '?', 'Notice', {
+        this.$confirm('Switch to branch: ' + branch.home_branch_name + '?', 'Notice', {
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel'
         }).then(() => {
           this.console.cpvisible = true
           this.console.loading = true
-          this.console.title = 'Switch to branch: ' + branch
+          this.console.title = 'Switch to branch: ' + branch.home_branch_name
           this.console.message = ''
           this.post({
             name: 'big',
@@ -124,11 +129,16 @@
               this.project.path,
               this.project.type,
               'switch',
-              this.project.branch
+              branch.home_branch_name
             ]
           }, (message) => {
-            if (message === null) {
+            if (message === 'true' || message === 'false') {
               this.console.loading = false
+              if (message === 'true') {
+                this.project.branch = branch.home_branch_name
+                ProjectService.setCurrent(this.project)
+                this.$router.push('/home')
+              }
               return
             }
             this.console.message += message + '\r\n'
@@ -152,6 +162,14 @@
           this.filteredBranches = data
           this.branches = data
           this.loading = false
+
+          this.branches.forEach((branch, index) => {
+            if (branch.is_current === true) {
+              this.project.branch = branch.home_branch_name
+              ProjectService.setCurrent(this.project)
+              this.push(branch)
+            }
+          })
         })
       },
       get: CommandLine.get,
@@ -203,8 +221,14 @@
 
   .develop-menu-item {
     width: 300px;
-    left: 0px;
     display: flex;
+    border-top: #eeeeee 1px solid;
+  }
+
+  .develop-menu-item-background {
+    width: 300px;
+    display: flex;
+    left: 0px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
@@ -232,6 +256,7 @@
     margin-top: 0px;
     margin-bottom: 0px;
     padding-top: 0px;
+    border: #eeeeee 1px solid;
   }
 
   .develop-menu-item-badge {
@@ -246,8 +271,18 @@
     height: 30px;
   }
 
-  #branches li:nth-of-type(odd){ background:#ffffff; }
-  #branches li:nth-of-type(even){ background:#f1f1f1; }
+  .active {
+    color: #5aaffe;
+    background-color: #ebf5ff;
+  }
+  .selected {
+    color: white;
+    background-color: #5aaffe;
+  }
+
+  /* #branches li:nth-of-type(odd){ background-color:#ffffff; }
+  #branches li:nth-of-type(even){ background-color:#f1f1f1; } */
+  #branches li:first-child {border-top: none;}
   #branches li:hover { background-color:#ebf5ff; }
 
 </style>

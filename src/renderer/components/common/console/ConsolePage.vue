@@ -2,8 +2,7 @@
   <el-dialog :title="title" :show-close=false :close-on-click-modal=false :close-on-press-escape=false :visible.sync="visible" width="80%" append-to-body>
     <el-input
       type="textarea"
-      :autosize="{ minRows: 2, maxRows: 4}"
-      placeholder="Waiting"
+      :autosize="{ minRows: 2, maxRows: 30}"
       :disabled="true"
       v-model="message">
     </el-input>
