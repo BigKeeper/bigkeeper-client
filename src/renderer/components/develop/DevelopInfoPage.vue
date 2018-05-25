@@ -1,9 +1,9 @@
 <template>
   <el-container>
     <el-main>
-      <el-row class="row" v-for="(value, index) in branch.involve_modules" :key="index">
+      <div class="list-item" v-for="(value, index) in branch.involve_modules" :key="index">
         <module-information v-bind:module="value"></module-information>
-      </el-row>
+      </div>
     </el-main>
     <el-footer style="height: 44px; background-color: #B3C0D1; padding-top:8px;">
       <el-col :span="10">
@@ -265,8 +265,9 @@
     font-size: 14px;
   }
 
-  .row {
+  .list-item {
     margin-bottom: 24px;
+    flex-basis: 100%;
   }
 
   .el-header {

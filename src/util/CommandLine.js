@@ -1,7 +1,8 @@
 var CommandLine = {
   post: function (command, completion) {
     var spawn = require('child_process').spawn
-    var ls = spawn(command.name, command.params)
+    let shellEnv = require('shell-env')
+    var ls = spawn(command.name, command.params, { env: shellEnv.sync() })
 
     var success = 'true'
 
@@ -46,7 +47,8 @@ var CommandLine = {
   },
   get: function (command, completion) {
     const { exec } = require('child_process')
-    exec(command, { stdio: 'inherit' }, (error, stdout, stderr) => {
+    let shellEnv = require('shell-env')
+    exec(command, { env: shellEnv.sync() }, (error, stdout, stderr) => {
       if (error) {
         this.$alert(CommandLine.parseStderr(error), 'Error', {
           confirmButtonText: 'Confirm'

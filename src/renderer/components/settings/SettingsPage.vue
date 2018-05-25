@@ -24,7 +24,7 @@
           ProjectService.clear()
           this.$message({
             type: 'success',
-            message: '删除成功!'
+            message: 'Clear success'
           })
           this.$router.push('/landing')
         }).catch(() => {
