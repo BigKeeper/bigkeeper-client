@@ -27,6 +27,10 @@
       v-bind:title="console.title"
       v-bind:message="console.message">
     </console-page>
+    <develop-form
+      v-bind:dfvisible.sync="dfvisible"
+      v-bind:branch="branch">
+    </develop-form>
   </el-container>
 </template>
 
@@ -34,15 +38,18 @@
   import ModuleInformation from '../common/ModuleInformation'
   import CommandLine from '../../../util/CommandLine.js'
   import ConsolePage from '../common/console/ConsolePage'
+  import DevelopForm from './DevelopForm'
+  import DevelopService from '../../../service/DevelopService.js'
 
   export default {
     name: 'develop-info-page',
-    components: { ModuleInformation, ConsolePage },
+    components: { ModuleInformation, ConsolePage, DevelopForm },
     mounted () {
       this.refresh()
     },
     data () {
       return {
+        dfvisible: false,
         console: {
           cpvisible: false,
           loading: true,
@@ -77,15 +84,97 @@
       refresh () {
         this.branch = this.$route.params.branch
         this.project = this.$route.params.project
+
+        let modules = DevelopService.getCurrentModules(this.project.path)
+        this.branch.involve_modules.forEach((module, index) => {
+          module.status = 'normal'
+
+          if (this.branch.is_current === true) {
+            module.status = 'current'
+
+            modules.path.all.forEach((moduleName, index) => {
+              if (module.module_name === moduleName && module.current_branch.indexOf(this.branch.home_branch_name) === -1) {
+                module.status = 'error'
+              }
+            })
+            modules.path.del.forEach((moduleName, index) => {
+              if (module.module_name === moduleName) {
+                module.status = 'deleted'
+              }
+            })
+            modules.git.all.forEach((moduleName, index) => {
+              if (module.module_name === moduleName) {
+                module.status = 'finished'
+              }
+            })
+          }
+        })
+
+        console.log(this.branch)
       },
       push (link) {
         this.$router.push(link)
       },
       update () {
+        this.dfvisible = true
       },
       finish () {
+        this.$confirm('Finish this ' + this.project.type + '?', 'Notice', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.console.cpvisible = true
+          this.console.loading = true
+          this.console.title = 'Finish the branch: ' + this.branch.home_branch_name
+          this.console.message = ''
+
+          this.post({
+            name: 'big',
+            params: [
+              '-p',
+              this.project.path,
+              this.project.type,
+              'finish'
+            ]
+          }, (message) => {
+            if (message === 'true' || message === 'false') {
+              this.console.loading = false
+              return
+            }
+            this.console.message += message + '\r\n'
+          })
+        }).catch(() => {
+        })
       },
       publish () {
+        this.$confirm('Publish this ' + this.project.type + '?', 'Notice', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          this.console.cpvisible = true
+          this.console.loading = true
+          this.console.title = 'Publish the branch: ' + this.branch.home_branch_name
+          this.console.message = ''
+
+          this.post({
+            name: 'big',
+            params: [
+              '-p',
+              this.project.path,
+              this.project.type,
+              'publish'
+            ]
+          }, (message) => {
+            if (message === 'true' || message === 'false') {
+              this.console.loading = false
+              return
+            }
+            this.console.message += message + '\r\n'
+          })
+        }).catch(() => {
+        })
       },
       pull () {
         this.console.cpvisible = true

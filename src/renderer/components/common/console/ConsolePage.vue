@@ -6,7 +6,7 @@
       :disabled="true"
       v-model="message">
     </el-input>
-    <el-button type="primary" style="margin-top: 10px; text-align: right;" round :loading="loading" @click="onCancel">Done</el-button>
+    <el-button type="primary" style="margin-top: 10px; text-align: right;" round :loading="loading" @click="onCancel">{{loading? 'Processing' : 'Done'}}</el-button>
   </el-dialog>
 </template>
 

@@ -89,6 +89,10 @@ var ProjectService = {
     const Store = require('electron-store')
     const store = new Store()
     store.set('current', project)
+  },
+
+  getCurrentVersion: function () {
+
   }
 }
 

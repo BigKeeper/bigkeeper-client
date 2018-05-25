@@ -8,13 +8,15 @@
         </el-radio-group>
       </el-form-item>
       <el-form-item label="Name">
-        <el-input v-model="form.name"></el-input>
+        <el-input placeholder="Please input the name of the project" v-model="form.name"></el-input>
       </el-form-item>
       <el-form-item label="Path">
-        <el-input v-model="form.path"></el-input>
+        <el-input v-model="form.path" placeholder="Please input the path of the project">
+          <el-button slot="append" icon="el-icon-search"></el-button>
+        </el-input>
       </el-form-item>
       <el-form-item label="User">
-        <el-input v-model="form.user">mmoaay</el-input>
+        <el-input v-model="form.user" placeholder="Please input the name of the user">mmoaay</el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="onSubmit">Create</el-button>
@@ -46,9 +48,9 @@
     data () {
       return {
         form: {
-          name: 'LPDTeamiOS',
-          path: '/Users/mmoaay/Documents/eleme/LPDTeamiOS',
-          user: 'mmoaay',
+          name: '',
+          path: '',
+          user: '',
           type: 'feature',
           branch: ''
         },
