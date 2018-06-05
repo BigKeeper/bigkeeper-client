@@ -46,6 +46,8 @@ app.on('activate', () => {
   }
 })
 
+require('./application-menu')
+
 /**
  * Auto Updater
  *

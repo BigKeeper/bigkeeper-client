@@ -19,8 +19,8 @@
         </div>
         <div class="doc">
           <div class="title alt">About us</div>
-          <el-button @click="open('https://electron.atom.io/docs/')" round>Github</el-button>
-          <el-button @click="big()" round>Vue.js</el-button>
+          <el-button @click="open('https://github.com/BigKeeper/bigkeeper')" round>Github</el-button>
+          <el-button @click="open('https://github.com/BigKeeper')" round>Group</el-button>
         </div>
       </div>
     </main>
@@ -32,7 +32,6 @@
 <script>
   import SystemInformation from './SystemInformation'
   import ProjectForm from '../project/ProjectForm'
-  import CommandLine from '../../../util/command_line.js'
   export default {
     name: 'landing-page',
     data () {
@@ -47,12 +46,7 @@
       },
       push (link) {
         this.$router.push(link)
-      },
-      update (pfvisible) {
-        console.log(pfvisible)
-        this.pfvisible = pfvisible
-      },
-      big: CommandLine.big
+      }
     }
   }
 </script>
