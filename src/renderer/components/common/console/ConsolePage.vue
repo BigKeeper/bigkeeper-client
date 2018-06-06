@@ -11,12 +11,30 @@
 </template>
 
 <script>
+  import CommandLine from '../../../../util/CommandLine.js'
   export default {
     props: {
       cpvisible: Boolean,
-      loading: Boolean,
-      title: String,
-      message: String
+      params: Array,
+      title: String
+    },
+    watch: {
+      params: function (val) {
+        this.loading = true
+        this.message = ''
+
+        this.post({
+          name: 'big',
+          params: this.params
+        }, (message) => {
+          if (message === 'true' || message === 'false') {
+            this.loading = false
+            this.result = (message === 'true')
+            return
+          }
+          this.message += message + '\r\n'
+        })
+      }
     },
     computed: {
       visible: {
@@ -32,12 +50,22 @@
     },
     data () {
       return {
+        loading: true,
+        message: '',
+        result: false
       }
     },
     methods: {
       onCancel () {
+        if (this.result === true) {
+          this.push('/home')
+        }
         this.visible = false
-      }
+      },
+      push (link) {
+        this.$router.push(link)
+      },
+      post: CommandLine.post
     }
   }
 </script>

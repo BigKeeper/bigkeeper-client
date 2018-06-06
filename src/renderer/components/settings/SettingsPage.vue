@@ -34,7 +34,7 @@
   }
 </script>
 
-<style>
+<style scoped>
   #wrapper {
     background:
       radial-gradient(

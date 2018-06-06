@@ -29,10 +29,9 @@
       v-bind:dfvisible.sync="dfvisible">
     </develop-form>
     <console-page
-      v-bind:cpvisible.sync="console.cpvisible"
-      v-bind:loading="console.loading"
-      v-bind:title="console.title"
-      v-bind:message="console.message">
+      v-bind:cpvisible.sync="cpvisible"
+      v-bind:params="console.params"
+      v-bind:title="console.title">
     </console-page>
   </el-container>
 </template>
@@ -59,11 +58,10 @@
     },
     data () {
       return {
+        cpvisible: false,
         console: {
-          cpvisible: false,
-          loading: true,
           title: '',
-          message: ''
+          params: []
         },
         project: {
           name: '',
@@ -116,12 +114,8 @@
           confirmButtonText: 'Confirm',
           cancelButtonText: 'Cancel'
         }).then(() => {
-          this.console.cpvisible = true
-          this.console.loading = true
-          this.console.title = 'Switch to branch: ' + branch.home_branch_name
-          this.console.message = ''
-          this.post({
-            name: 'big',
+          this.console = {
+            title: 'Switch to branch: ' + branch.home_branch_name,
             params: [
               '-u',
               this.project.user,
@@ -131,18 +125,8 @@
               'switch',
               branch.home_branch_name
             ]
-          }, (message) => {
-            if (message === 'true' || message === 'false') {
-              this.console.loading = false
-              if (message === 'true') {
-                this.project.branch = branch.home_branch_name
-                ProjectService.setCurrent(this.project)
-                this.$router.push('/home')
-              }
-              return
-            }
-            this.console.message += message + '\r\n'
-          })
+          }
+          this.cpvisible = true
         }).catch(() => {
         })
       },
@@ -172,8 +156,7 @@
           })
         })
       },
-      get: CommandLine.get,
-      post: CommandLine.post
+      get: CommandLine.get
     }
   }
 </script>

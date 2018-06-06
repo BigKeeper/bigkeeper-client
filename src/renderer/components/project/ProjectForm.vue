@@ -12,7 +12,7 @@
       </el-form-item>
       <el-form-item label="Path">
         <el-input v-model="form.path" placeholder="Please input the path of the project">
-          <el-button slot="append" icon="el-icon-search"></el-button>
+          <el-button id="select-directory" slot="append" icon="el-icon-search" @click="onSelect"></el-button>
         </el-input>
       </el-form-item>
       <el-form-item label="User">
@@ -31,6 +31,15 @@
   export default {
     props: {
       pfvisible: Boolean
+    },
+    watch: {
+      pfvisible: function (val) {
+        if (val === true) {
+          ProjectService.getCurrrentUser((user) => {
+            this.form.user = user
+          })
+        }
+      }
     },
     computed: {
       visible: {
@@ -73,6 +82,18 @@
         this.push('/home')
 
         this.visible = false
+      },
+      onSelect () {
+        const dialog = require('electron').remote.dialog
+        dialog.showOpenDialog({
+          properties: ['openDirectory']
+        }, (files) => {
+          if (files) {
+            this.form.path = files[0]
+            const path = require('path')
+            this.form.name = path.basename(this.form.path)
+          }
+        })
       },
       onCancel () {
         this.visible = false
