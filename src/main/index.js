@@ -46,7 +46,9 @@ app.on('activate', () => {
   }
 })
 
-require('./application-menu')
+if (process.env.NODE_ENV !== 'development') {
+  require('./application-menu')
+}
 
 /**
  * Auto Updater

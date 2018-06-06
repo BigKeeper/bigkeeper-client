@@ -15,7 +15,7 @@ var CommandLine = {
         completion(CommandLine.parseData(data))
       } else {
         success = 'false'
-        this.$alert(CommandLine.parseStderr(data), 'Error', {
+        alert(CommandLine.parseStderr(data), 'Error', {
           confirmButtonText: 'Confirm'
         })
       }
@@ -45,12 +45,12 @@ var CommandLine = {
     }
     return str
   },
-  get: function (command, completion) {
+  getData: function (command, completion) {
     const { exec } = require('child_process')
     let shellEnv = require('shell-env')
     exec(command, { env: shellEnv.sync() }, (error, stdout, stderr) => {
       if (error) {
-        this.$alert(CommandLine.parseStderr(error), 'Error', {
+        alert(CommandLine.parseStderr(error), 'Error', {
           confirmButtonText: 'Confirm'
         })
         completion(null)
@@ -58,15 +58,22 @@ var CommandLine = {
       }
       if (stderr) {
         let stderrMessage = CommandLine.parseStderr(stderr)
-        this.$alert(stderrMessage, 'Error', {
+        alert(stderrMessage, 'Error', {
           confirmButtonText: 'Confirm'
         })
         completion(null)
         return
       }
-      // console.log(stdout)
-      console.log(CommandLine.parseData(stdout))
-      completion(JSON.parse(CommandLine.parseData(stdout)))
+      completion(CommandLine.parseData(stdout))
+    })
+  },
+  get: function (command, completion) {
+    CommandLine.getData(command, (data) => {
+      if (data !== null) {
+        completion(JSON.parse(data))
+      } else {
+        completion(null)
+      }
     })
   }
 }

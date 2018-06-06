@@ -90,9 +90,28 @@ var ProjectService = {
     const store = new Store()
     store.set('current', project)
   },
+  getCurrentVersion: function (homePath) {
+    try {
+      var path = require('path')
+      let file = path.normalize(homePath + '/Bigkeeper')
 
-  getCurrentVersion: function () {
+      let rf = require('fs')
+      let data = rf.readFileSync(file, 'utf-8')
 
+      var version = data.match(/version\s+("|')\d+\.\d+\.\d+("|')/g)[0].match(/\d+\.\d+\.\d+/g)[0]
+
+      console.log(version)
+
+      return version
+    } catch (error) {
+      return ''
+    }
+  },
+  getCurrrentUser: function (completion) {
+    var CommandLine = require('../util/CommandLine.js')
+    CommandLine.getData('git config user.name', (user) => {
+      completion(user)
+    })
   }
 }
 

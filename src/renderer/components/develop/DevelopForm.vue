@@ -26,10 +26,9 @@
       </el-form-item>
     </el-form>
     <console-page
-      v-bind:cpvisible.sync="console.cpvisible"
-      v-bind:loading="console.loading"
-      v-bind:title="console.title"
-      v-bind:message="console.message">
+      v-bind:cpvisible.sync="cpvisible"
+      v-bind:params="console.params"
+      v-bind:title="console.title">
     </console-page>
   </el-dialog>
 </template>
@@ -48,6 +47,7 @@
       dfvisible: function (val) {
         if (val === true) {
           this.project = ProjectService.current()
+          this.form.version = ProjectService.getCurrentVersion(this.project.path)
           this.loadModules()
         }
       }
@@ -68,11 +68,10 @@
     },
     data () {
       return {
+        cpvisible: false,
         console: {
-          cpvisible: false,
-          loading: true,
           title: '',
-          message: ''
+          params: []
         },
         project: {
           name: '',
@@ -117,11 +116,7 @@
 
         var params = []
         if (this.branch !== undefined) {
-          this.console.cpvisible = true
-          this.console.loading = true
           this.console.title = 'Update the branch: ' + this.branch.home_branch_name
-          this.console.message = ''
-
           params = [
             '-p',
             this.project.path,
@@ -129,11 +124,7 @@
             'update'
           ]
         } else {
-          this.console.cpvisible = true
-          this.console.loading = true
           this.console.title = 'Start the branch: ' + this.form.version + '_' + this.project.user + '_' + this.form.name
-          this.console.message = ''
-
           params = [
             '-v',
             this.form.version,
@@ -146,28 +137,12 @@
             this.form.name
           ]
         }
-
         this.form.modules.forEach((module, index) => {
           params.push(module.module_name)
         })
 
-        this.post({
-          name: 'big',
-          params: params
-        }, (message) => {
-          if (message === 'true' || message === 'false') {
-            this.console.loading = false
-
-            if (message === 'true') {
-              this.visible = false
-              this.push('/home')
-            } else {
-
-            }
-            return
-          }
-          this.console.message += message + '\r\n'
-        })
+        this.console.params = params
+        this.cpvisible = true
       },
       onCancel () {
         this.visible = false
@@ -212,8 +187,7 @@
           this.loading = false
         })
       },
-      get: CommandLine.get,
-      post: CommandLine.post
+      get: CommandLine.get
     }
   }
 </script>
