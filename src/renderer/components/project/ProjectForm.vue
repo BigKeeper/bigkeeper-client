@@ -70,6 +70,7 @@
     },
     methods: {
       onSubmit () {
+        console.log('here')
         if (ProjectService.add(this.form) === false) {
           this.$message({
             message: 'There is already a project with path: ' + this.form.path,

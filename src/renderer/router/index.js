@@ -28,6 +28,11 @@ export default new Router({
           ]
         },
         {
+          path: 'toolbox-images',
+          name: 'toolbox-images-page',
+          component: require('@/components/toolbox/images/ResourcesPage').default
+        },
+        {
           path: 'settings',
           name: 'settings-page',
           component: require('@/components/settings/SettingsPage').default

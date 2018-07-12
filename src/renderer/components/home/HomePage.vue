@@ -21,8 +21,8 @@
           </el-submenu>
           <el-submenu index="4">
             <template slot="title"><i class="el-icon-goods"></i></template>
-            <el-menu-item index="4-1"><i class="el-icon-picture"></i>Images</el-menu-item>
-            <el-menu-item index="4-2"><i class="el-icon-document"></i>Podfile</el-menu-item>
+            <el-menu-item index="4-1"  @click="push('/home', 'images')"><i class="el-icon-picture"></i>Images</el-menu-item>
+            <el-menu-item index="4-2"  @click="push('/home', 'podfile')"><i class="el-icon-document"></i>Podfile</el-menu-item>
           </el-submenu>
           <el-menu-item index="5" @click="push('/home', 'settings')">
             <i class="el-icon-setting"></i>
@@ -77,15 +77,17 @@
       },
       refresh () {
         this.project = ProjectService.current()
-
         console.log(this.project.type)
-
         if (this.project.type === 'feature') {
           this.menuIndex = '1'
           this.$router.push('/home/develop')
         } else if (this.project.type === 'hotfix') {
           this.menuIndex = '2'
           this.$router.push('/home/develop')
+        } else if (this.project.type === 'images') {
+          console.log('toolbox-images')
+          this.menuIndex = '4-1'
+          this.$router.push('/home/toolbox-images')
         } else {
           this.menuIndex = '5'
           this.$router.push('/home/settings')
