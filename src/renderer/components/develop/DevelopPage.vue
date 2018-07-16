@@ -187,7 +187,7 @@
     text-align: right;
     display: flex;
     position: absolute;
-    width: 300px;
+    /* width: 300px; */
     top: 0px;
     left: 0px;
     right: 0px;
@@ -203,7 +203,7 @@
   }
 
   .develop-menu-item {
-    width: 300px;
+    /* width: 300px; */
     display: flex;
     border-top: #eeeeee 1px solid;
   }
@@ -212,13 +212,14 @@
     width: 300px;
     display: flex;
     left: 0px;
+    right: 0px;
     padding-top: 10px;
     padding-bottom: 10px;
   }
 
   .develop-menu-item-title {
     flex: 1;
-    width: 200px;
+    width: 210px;
     padding-left: 10px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -228,7 +229,7 @@
   }
 
   .develop-menu {
-    width: 300px;
+    /* width: 300px; */
     overflow: auto;
     position: absolute;
     left: 0px;

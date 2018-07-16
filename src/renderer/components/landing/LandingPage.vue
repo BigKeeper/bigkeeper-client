@@ -1,36 +1,29 @@
 <template>
   <div id="wrapper">
     <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
+    <div class="welcome">
+      Efficiency improvement for iOS&Android modular development.
+    </div>
     <main>
       <div class="left-side">
-        <span class="title">
-          Welcome to your new project!
-        </span>
-        <system-information></system-information>
-      </div>
-
-      <div class="right-side">
         <div class="doc">
           <div class="title">Getting Started</div>
-          <p>
-            Efficiency improvement for iOS&Android modular development..
-          </p>
-          <el-button type="primary" @click="pfvisible = true" round>Add your first project</el-button><br><br>
+          <el-button type="primary" @click="pfvisible = true" round>Add your first project</el-button>
         </div>
+      </div>
+      <div class="right-side">
         <div class="doc">
-          <div class="title alt">About us</div>
-          <el-button @click="open('https://github.com/BigKeeper/bigkeeper')" round>Github</el-button>
-          <el-button @click="open('https://github.com/BigKeeper')" round>Group</el-button>
+          <div class="title">About us</div>
+          <el-button icon="el-icon-star-on" type="success" @click="open('https://github.com/eleme/bigkeeper')" round>Star</el-button>
+          <el-button @click="open('https://github.com/orgs/BigKeeper/people')" round>Team</el-button>
         </div>
       </div>
     </main>
-
     <project-form v-bind:pfvisible.sync="pfvisible"></project-form>
   </div>
 </template>
 
 <script>
-  import SystemInformation from './SystemInformation'
   import ProjectForm from '../project/ProjectForm'
   export default {
     name: 'landing-page',
@@ -39,7 +32,7 @@
         pfvisible: false
       }
     },
-    components: { SystemInformation, ProjectForm },
+    components: { ProjectForm },
     methods: {
       open (link) {
         this.$electron.shell.openExternal(link)
@@ -92,17 +85,22 @@
     flex-direction: column;
   }
 
+  .right-side {
+    display: flex;
+    flex-direction: column;
+  }
+
   .welcome {
     color: #555;
-    font-size: 23px;
-    margin-bottom: 10px;
+    font-size: 18px;
+    margin-bottom: 50px;
   }
 
   .title {
     color: #2c3e50;
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
   }
 
   .title.alt {

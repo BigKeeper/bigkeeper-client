@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-container class="home-container">
-      <el-aside class="el-aside" style="width:62px">
+      <el-aside class="el-aside" style="width:65px">
         <div class="information">
           <project-information></project-information>
         </div>
@@ -108,18 +108,23 @@
 
   .el-aside {
     color: #333;
-    width: 62px;
+    /* width: 64px; */
     background-color:#545c64;
   }
 
   .el-menu {
+    left: 0px;
+    right: 0px;
     background-color: #545c64;
-    width: 63px;
+    border-right-width: 0px;
+    /* width: 62px; */
     text-color: #fff;
   }
 
   .information {
+    left: 0px;
+    right: 0px;
     height: 60px;
-    width: 62px;
+    /* width: 62px; */
   }
 </style>
