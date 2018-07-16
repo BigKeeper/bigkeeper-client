@@ -1,65 +1,45 @@
 <template>
-  <el-dialog title="Add new project" :visible.sync="visible" :before-close="handleClose" width="80%">
+  <el-dialog title="Add new project" :visible.sync="visible" width="80%" append-to-body>
     <el-form ref="form" :model="form" label-width="80px" style="margin-top: 20px">
-      <el-form-item label="Name">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
-      <el-form-item label="Path">
-        <el-input v-model="form.name"></el-input>
-      </el-form-item>
       <el-form-item label="Type" style="margin-top: 20px">
         <el-radio-group v-model="radio.type" size="small">
-          <el-radio-button label="Feature"></el-radio-button>
-          <el-radio-button label="Hotfix"></el-radio-button>
+          <el-radio-button label="Local"></el-radio-button>
+          <el-radio-button disabled label="Remote"></el-radio-button>
         </el-radio-group>
       </el-form-item>
-      <el-form-item label="活动区域" style="margin-top: 20px">
-        <el-select v-model="form.region" placeholder="请选择活动区域">
-          <el-option label="区域一" value="shanghai"></el-option>
-          <el-option label="区域二" value="beijing"></el-option>
-        </el-select>
+      <el-form-item label="Name">
+        <el-input placeholder="Please input the name of the project" v-model="form.name"></el-input>
       </el-form-item>
-      <el-form-item label="活动时间">
-        <el-col :span="11">
-          <el-date-picker type="date" placeholder="选择日期" v-model="form.date1" style="width: 100%;"></el-date-picker>
-        </el-col>
-        <el-col class="line" :span="2">-</el-col>
-        <el-col :span="11">
-          <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
-        </el-col>
+      <el-form-item label="Path">
+        <el-input v-model="form.path" placeholder="Please input the path of the project">
+          <el-button id="select-directory" slot="append" icon="el-icon-search" @click="onSelect"></el-button>
+        </el-input>
       </el-form-item>
-      <el-form-item label="即时配送">
-        <el-switch v-model="form.delivery"></el-switch>
-      </el-form-item>
-      <el-form-item label="活动性质">
-        <el-checkbox-group v-model="form.type">
-          <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-          <el-checkbox label="地推活动" name="type"></el-checkbox>
-          <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-          <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-      <el-form-item label="特殊资源">
-        <el-radio-group v-model="form.resource">
-          <el-radio label="线上品牌商赞助"></el-radio>
-          <el-radio label="线下场地免费"></el-radio>
-        </el-radio-group>
-      </el-form-item>
-      <el-form-item label="活动形式">
-        <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-form-item label="User">
+        <el-input v-model="form.user" placeholder="Please input the name of the user">mmoaay</el-input>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" @click="onSubmit">立即创建</el-button>
-        <el-button @click="onCancel">取消</el-button>
+        <el-button type="primary" @click="onSubmit">Create</el-button>
+        <el-button @click="onCancel">Cancel</el-button>
       </el-form-item>
     </el-form>
   </el-dialog>
 </template>
 
 <script>
+  import ProjectService from '../../../service/ProjectService.js'
   export default {
     props: {
       pfvisible: Boolean
+    },
+    watch: {
+      pfvisible: function (val) {
+        if (val === true) {
+          ProjectService.getCurrrentUser((user) => {
+            this.form.user = user
+          })
+        }
+      }
     },
     computed: {
       visible: {
@@ -78,27 +58,42 @@
       return {
         form: {
           name: '',
-          region: '',
-          date1: '',
-          date2: '',
-          delivery: false,
-          type: [],
-          resource: '',
-          desc: ''
+          path: '',
+          user: '',
+          type: 'feature',
+          branch: ''
         },
         radio: {
-          type: 'Feature'
+          type: 'Local'
         }
       }
     },
     methods: {
-      handleClose (done) {
-        done()
+      onSubmit () {
+        if (ProjectService.add(this.form) === false) {
+          this.$message({
+            message: 'There is already a project with path: ' + this.form.path,
+            type: 'warning'
+          })
+          return
+        }
+
+        ProjectService.setCurrent(this.form)
+        this.push('/home')
+
         this.visible = false
       },
-      onSubmit () {
-        this.visible = false
-        this.push('/home/develop')
+      onSelect () {
+        const dialog = require('electron').remote.dialog
+        dialog.showOpenDialog({
+          properties: ['openDirectory']
+        }, (files) => {
+          if (files) {
+            this.form.path = files[0]
+            const path = require('path')
+            this.form.name = path.basename(this.form.path)
+          }
+        })
       },
       onCancel () {
         this.visible = false

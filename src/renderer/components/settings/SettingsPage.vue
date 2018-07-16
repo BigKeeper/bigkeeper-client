@@ -1,14 +1,10 @@
 <template>
   <div id="wrapper">
-    <img id="logo" src="~@/assets/logo.png" alt="electron-vue">
-    <div class="welcome">
-      Efficiency improvement for iOS&Android modular development.
-    </div>
     <main>
       <div class="left-side">
         <div class="doc">
-          <div class="title">Getting Started</div>
-          <el-button type="primary" @click="pfvisible = true" round>Add your first project</el-button>
+          <div class="title">Settings</div>
+          <el-button type="warning" @click="clear" round>Clear all cache</el-button>
         </div>
       </div>
       <div class="right-side">
@@ -19,42 +15,35 @@
         </div>
       </div>
     </main>
-    <project-form v-bind:pfvisible.sync="pfvisible"></project-form>
   </div>
 </template>
 
 <script>
-  import ProjectForm from '../project/ProjectForm'
+  import ProjectService from '../../../service/ProjectService.js'
+
   export default {
-    name: 'landing-page',
-    data () {
-      return {
-        pfvisible: false
-      }
-    },
-    components: { ProjectForm },
+    name: 'setting-page',
     methods: {
-      open (link) {
-        this.$electron.shell.openExternal(link)
-      },
-      push (link) {
-        this.$router.push(link)
+      clear () {
+        this.$confirm('This operation will reset all the data, including projects, are you sure?', 'Warning', {
+          confirmButtonText: 'Confirm',
+          cancelButtonText: 'Cancel',
+          type: 'warning'
+        }).then(() => {
+          ProjectService.clear()
+          this.$message({
+            type: 'success',
+            message: 'Clear success'
+          })
+          this.$router.push('/landing')
+        }).catch(() => {
+        })
       }
     }
   }
 </script>
 
 <style scoped>
-  @import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
-
-  * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-  }
-
-  body { font-family: 'Source Sans Pro', sans-serif; }
-
   #wrapper {
     background:
       radial-gradient(
@@ -100,7 +89,7 @@
     color: #2c3e50;
     font-size: 20px;
     font-weight: bold;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   .title.alt {
@@ -112,23 +101,4 @@
     color: black;
     margin-bottom: 10px;
   }
-
-  /* .doc button {
-    font-size: .8em;
-    cursor: pointer;
-    outline: none;
-    padding: 0.75em 2em;
-    border-radius: 2em;
-    display: inline-block;
-    color: #fff;
-    background-color: #4fc08d;
-    transition: all 0.15s ease;
-    box-sizing: border-box;
-    border: 1px solid #4fc08d;
-  }
-
-  .doc button.alt {
-    color: #42b983;
-    background-color: transparent;
-  } */
 </style>
