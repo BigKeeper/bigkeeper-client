@@ -2,7 +2,7 @@ var CommandLine = {
   post: function (command, completion) {
     var spawn = require('child_process').spawn
     let shellEnv = require('shell-env')
-    var ls = spawn(command.name, command.params, { env: shellEnv.sync() })
+    var ls = spawn(command.name, command.params, { env: shellEnv.sync('/bin/bash') })
 
     var success = 'true'
 
@@ -48,7 +48,7 @@ var CommandLine = {
   getData: function (command, completion) {
     const { exec } = require('child_process')
     let shellEnv = require('shell-env')
-    exec(command, { env: shellEnv.sync() }, (error, stdout, stderr) => {
+    exec(command, { env: shellEnv.sync('/bin/bash') }, (error, stdout, stderr) => {
       if (error) {
         alert(CommandLine.parseStderr(error), 'Error', {
           confirmButtonText: 'Confirm'
