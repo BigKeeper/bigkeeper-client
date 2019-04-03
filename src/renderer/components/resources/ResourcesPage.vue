@@ -4,7 +4,7 @@
       <console-page v-on:updateList="updateList"></console-page>
     </div>
     <el-table ref="table" stripe :data="imagelist" class="el-table-filter"
-      highlight-current-row @current-change="handleCurrentChange">
+      highlight-current-row @row-click="handleCurrentChange">
         <el-table-column
           fixed
           type="index"
@@ -38,16 +38,19 @@
           label="文件地址">
         </el-table-column>
       </el-table>
+      <resource-detail-page :rdvisible.sync="rdvisible" v-bind:params="resourceDetail.params"></resource-detail-page>
   </div>
 </template>
 
 <script>
   import ConsolePage from './ConsolePage'
   import CommandLine from '../../../util/CommandLine.js'
+  import ResourceDetailPage from './ResourceDetailPage'
   export default {
     name: 'image-page',
     components: {
-      ConsolePage
+      ConsolePage,
+      ResourceDetailPage
     },
     data () {
       return {
@@ -58,7 +61,9 @@
           type: 'image',
           branch: ''
         },
-        imagelist: []
+        imagelist: [],
+        rdvisible: false,
+        resourceDetail: {}
       }
     },
     methods: {
@@ -67,14 +72,16 @@
         this.imagelist = dataList
         this.loading = false
       },
-
-      handleCurrentChange (val) {
-        this.$message({
-          message: val.file_name,
-          type: 'warning'
-        })
+      handleClose: function (val) {
+        console.log('handleClose')
+        this.rdvisible = false
       },
-
+      handleCurrentChange (row) {
+        console.log(this.rdvisible)
+        this.resourceDetail.params = row
+        this.rdvisible = true
+        console.log(this.rdvisible)
+      },
       onCancel () {
         this.$message({
           message: 'cancel!',

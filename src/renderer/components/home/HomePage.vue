@@ -28,6 +28,10 @@
             <i class="el-icon-setting"></i>
             <span slot="title">Feature</span>
           </el-menu-item>
+          <el-menu-item index="6" @click="push('/home', 'dashboard')">
+            <i class="el-icon-star-off"></i>
+            <span slot="title">Dashboard</span>
+          </el-menu-item>
         </el-menu>
       </el-aside>
       <router-view></router-view>
@@ -89,9 +93,12 @@
         } else if (this.project.type === 'image') {
           this.menuIndex = '4'
           this.$router.push('/home/image')
-        } else {
+        } else if (this.project.type === 'settings') {
           this.menuIndex = '5'
           this.$router.push('/home/settings')
+        } else {
+          this.menuIndex = '6'
+          this.$router.push('/home/dashboard')
         }
       }
     }

@@ -36,6 +36,11 @@ export default new Router({
           path: 'settings',
           name: 'settings-page',
           component: require('@/components/settings/SettingsPage').default
+        },
+        {
+          path: 'dashboard',
+          name: 'dashboard-page',
+          component: require('@/components/dashboard/DashboardPage').default
         }
       ]
     },
