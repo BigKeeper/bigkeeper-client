@@ -5,7 +5,7 @@
     <el-row>
       <el-col :span="12">
         <el-form-item label="检索模式">
-          <el-select v-model="form.mode" placeholder="选择检索模式">
+          <el-select v-model="form.mode" placeholder="选择检索模式" @change="changeType">
             <el-option label="同名资源" value="name"></el-option>
             <el-option label="相似资源" value="content"></el-option>
             <el-option label="大图检索" value="size"></el-option>
@@ -57,18 +57,20 @@
           loading: false,
           name: '',
           mode: 'name',
-          date1: '',
-          date2: '',
           isFilter: false,
           type: [],
           resource: '',
-          desc: '',
           imagelist: []
         },
         loading: false
       }
     },
     methods: {
+      changeType (newValue) {
+        console.log(newValue)
+        this.mode = newValue
+        this.$emit('updateType', newValue)
+      },
       onSubmit () {
         this.loading = true
         this.project = ProjectService.current()
@@ -76,15 +78,26 @@
         this.get("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' ' + this.form.mode, (data) => {
           if (data === null) {
             data = []
+            console.log('null')
           }
           var arrs = []
-          data.forEach((item, index) => {
-            item.pic = item.path[0]
-            if (item.count > 1) {
-              arrs.push(item)
-            }
-          })
-          this.imagelist = data
+          if (this.form.mode === 'name') {
+            data.forEach((item, index) => {
+              item.pic = item.path[0]
+              if (item.count > 1) {
+                arrs.push(item)
+              }
+            })
+          } else if (this.form.mode === 'content') {
+            data.forEach((item, index) => {
+              item.pic = item.path[0]
+              if (item.count > 1) {
+                arrs.push(item)
+              }
+            })
+          }
+
+          this.imagelist = arrs
           this.$emit('updateList', data)
         })
       },

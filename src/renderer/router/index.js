@@ -33,6 +33,11 @@ export default new Router({
           component: require('@/components/resources/ResourcesPage').default
         },
         {
+          path: 'podfile',
+          name: 'podfile-page',
+          component: require('@/components/resources/ResourcesPage').default
+        },
+        {
           path: 'settings',
           name: 'settings-page',
           component: require('@/components/settings/SettingsPage').default

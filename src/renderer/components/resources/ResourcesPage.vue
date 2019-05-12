@@ -36,6 +36,11 @@
         <el-table-column
           prop="path"
           label="文件地址">
+          <template slot-scope="{row}">
+          <div v-for="o in row.path" :key="o" class="text item">
+          {{ o }}
+          </div>
+          </template>
         </el-table-column>
       </el-table>
       <resource-detail-page :rdvisible.sync="rdvisible" v-bind:params="resourceDetail.params"></resource-detail-page>
@@ -71,6 +76,9 @@
         console.log(dataList)
         this.imagelist = dataList
         this.loading = false
+      },
+      updateType: function (type) {
+        console.log(type)
       },
       handleClose: function (val) {
         console.log('handleClose')
@@ -135,5 +143,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
 }
+
+.text {
+    font-size: 12px;
+  }
+
+  .item {
+    padding: 10px 0;
+  }
+
+  .box-card {
+    width: 480px;
+  }
 
 </style>

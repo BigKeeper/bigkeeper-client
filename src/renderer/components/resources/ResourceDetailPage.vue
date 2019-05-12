@@ -17,6 +17,10 @@
       <img :src="`file://${row.pic}`"  min-width="30" height="30" />
       </template>
     </el-table-column>
+    <el-table-column
+    property="module"
+    label="模块名称"
+     width="200"></el-table-column>
   </el-table>
   </el-dialog>
 </template>
@@ -41,12 +45,13 @@
       params (newValue) {
         console.log(newValue)
         var arr = []
-        newValue.path.forEach(pic => {
+        for (var i = 0; i < newValue.path.length; i++) {
           arr.push({
             name: newValue.file_name,
-            pic: pic
+            pic: newValue.path[i],
+            module: newValue.module[i]
           })
-        })
+        }
         this.gridData = arr
       }
     },
