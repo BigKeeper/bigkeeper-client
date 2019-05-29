@@ -74,8 +74,8 @@
       onSubmit () {
         this.loading = true
         this.project = ProjectService.current()
-        console.log("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' ' + this.form.mode)
-        this.get("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' ' + this.form.mode, (data) => {
+        console.log("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' ' + this.form.mode)
+        this.get("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' ' + this.form.mode, (data) => {
           if (data === null) {
             data = []
             console.log('null')
