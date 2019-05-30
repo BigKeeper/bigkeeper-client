@@ -3,9 +3,9 @@
     <div slot="header" class="clearfix">
       <span>{{ module.module_name }}</span>
       <span style="float: right; margin: -4px 0">
-        <el-button size="mini" class="el-icon-news" round></el-button>
-        <el-button size="mini" class="el-icon-arrow-up" round></el-button>
-        <el-button size="mini" class="el-icon-goods" round></el-button>
+        <el-button size="mini" class="el-icon-news" round>Pull</el-button>
+        <el-button size="mini" class="el-icon-arrow-up" round>Push</el-button>
+        <el-button size="mini" class="el-icon-goods" round>Rebase</el-button>
       </span>
     </div>
     <div style="padding-left: 20px; padding-top: 30px; padding-right: 20px; padding-bottom: 30px;" v-bind:style="statusStyle">

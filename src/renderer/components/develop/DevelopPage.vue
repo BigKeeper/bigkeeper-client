@@ -7,7 +7,7 @@
             <span class="develop-menu-item-title" @click="push(value)">{{ value.home_branch_name }}</span>
             <span>
               <el-badge :hidden="value.involve_modules.length === 0" :value="value.involve_modules.length.toString()" class="develop-menu-item-badge">
-                <el-button :disabled="value.is_current === true" size="mini" icon="el-icon-sort" @click="switchTo(value)" round></el-button>
+                <el-button :disabled="value.is_current === true" size="mini" icon="el-icon-sort" @click="switchTo(value)" round>{{value.is_current ? "HEAD" : "CheckOut"}}</el-button>
               </el-badge>
             </span>
           </div>
@@ -20,7 +20,7 @@
         </div>
         <div class="develop-header-button">
           <el-button size="mini" icon="el-icon-refresh" @click="refresh()" circle></el-button>
-          <el-button type="primary" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
+          <el-button type="mini" icon="el-icon-plus" @click="dfvisible = true" circle></el-button>
         </div>
       </el-header>
     </el-aside>
@@ -136,10 +136,9 @@
         this.filteredBranches = []
         this.branches = []
         this.loading = true
+        console.log("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
 
-        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
-
-        this.get("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
+        this.get("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
           if (data === null) {
             data = []
           }

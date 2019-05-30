@@ -8,18 +8,18 @@
     <el-footer style="background-color: #B3C0D1; margin-bottom:0px; height: autosize">
       <el-row style="padding: 10px;">
         <el-col :span="10" style="text-align: center;">
-          <el-button :disabled="branch.is_current === false" icon="el-icon-edit" type="primary" size="mini" @click="update()" round></el-button>
-          <el-button :disabled="branch.is_current === false || branch.status === 'finished' || branch.status === 'published'" icon="el-icon-check" type="success" size="mini" @click="finish()" round></el-button>
-          <el-button :disabled="branch.is_current === false || branch.status === 'published' || branch.status === 'developing'" icon="el-icon-upload2" type="success" size="mini" @click="publish()" round></el-button>
+          <el-button :disabled="branch.is_current === false" icon="el-icon-edit" type="primary" size="mini" @click="update()" round>Update</el-button>
+          <el-button :disabled="branch.is_current === false || branch.status === 'finished' || branch.status === 'published'" icon="el-icon-check" type="success" size="mini" @click="finish()" round>Finish</el-button>
+          <el-button :disabled="branch.is_current === false || branch.status === 'published' || branch.status === 'developing'" icon="el-icon-upload2" type="success" size="mini" @click="publish()" round>Publish</el-button>
         </el-col>
 
         <el-col :span="7" style="text-align: center;">
-          <el-button :disabled="branch.is_current === false" icon="el-icon-arrow-down" size="mini" @click="pull()" round></el-button>
-          <el-button :disabled="branch.is_current === false" icon="el-icon-arrow-up" size="mini" @click="pushTo()" round></el-button>
+          <el-button :disabled="branch.is_current === false" icon="el-icon-arrow-down" size="mini" @click="pull()" round>Pull</el-button>
+          <el-button :disabled="branch.is_current === false" icon="el-icon-arrow-up" size="mini" @click="pushTo()" round>Push</el-button>
         </el-col>
         <el-col :span="7" style="text-align: center;">
-          <el-button :disabled="branch.is_current === false" icon="el-icon-refresh" type="warning" size="mini" @click="rebase()" round></el-button>
-          <el-button icon="el-icon-delete" type="danger" size="mini" @click="deleted()" round></el-button>
+          <el-button :disabled="branch.is_current === false" icon="el-icon-refresh" type="warning" size="mini" @click="rebase()" round>Rebase</el-button>
+          <el-button icon="el-icon-delete" type="danger" size="mini" @click="deleted()" round>Delete</el-button>
         </el-col>
       </el-row>
     </el-footer>

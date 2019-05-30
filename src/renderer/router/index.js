@@ -28,9 +28,24 @@ export default new Router({
           ]
         },
         {
+          path: 'image',
+          name: 'image-page',
+          component: require('@/components/resources/ResourcesPage').default
+        },
+        {
+          path: 'podfile',
+          name: 'podfile-page',
+          component: require('@/components/podfile/PodfilePage').default
+        },
+        {
           path: 'settings',
           name: 'settings-page',
           component: require('@/components/settings/SettingsPage').default
+        },
+        {
+          path: 'dashboard',
+          name: 'dashboard-page',
+          component: require('@/components/dashboard/DashboardPage').default
         }
       ]
     },
