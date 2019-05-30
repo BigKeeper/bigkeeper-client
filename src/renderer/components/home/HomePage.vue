@@ -22,7 +22,7 @@
           <el-submenu index="4">
             <template slot="title"><i class="el-icon-goods"></i></template>
             <el-menu-item index="4-1" @click="push('/home', 'image')"><i class="el-icon-picture"></i>Images</el-menu-item>
-            <el-menu-item index="4-2"><i class="el-icon-document"></i>Podfile</el-menu-item>
+            <el-menu-item index="4-2" @click="push('/home', 'podfile')"><i class="el-icon-document"></i>Podfile</el-menu-item>
           </el-submenu>
           <el-menu-item index="5" @click="push('/home', 'settings')">
             <i class="el-icon-setting"></i>
@@ -90,6 +90,10 @@
         } else if (this.project.type === 'hotfix') {
           this.menuIndex = '2'
           this.$router.push('/home/develop')
+        } else if (this.project.type === 'podfile') {
+          this.menuIndex = '3'
+          console.log('podfile')
+          this.$router.push('/home/podfile')
         } else if (this.project.type === 'image') {
           this.menuIndex = '4'
           this.$router.push('/home/image')

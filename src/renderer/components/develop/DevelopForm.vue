@@ -160,7 +160,7 @@
         }
 
         this.loading = true
-        this.get("big -u '" + this.project.user + "' -p '" + this.project.path + "' module list", (data) => {
+        this.get("big -u '" + this.project.user + "' -p '" + this.project.path + "' spec list", (data) => {
           if (data === null) {
             data = []
           }
