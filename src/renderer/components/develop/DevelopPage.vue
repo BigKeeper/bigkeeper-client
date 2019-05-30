@@ -136,10 +136,9 @@
         this.filteredBranches = []
         this.branches = []
         this.loading = true
+        console.log("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
 
-        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
-
-        this.get("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
+        this.get("cd /Users/serenar/Desktop/github/bigkeeper/bin && ./big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
           if (data === null) {
             data = []
           }

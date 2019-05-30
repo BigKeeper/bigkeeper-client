@@ -2,9 +2,9 @@
   <el-dialog :title="title" :show-close=false :close-on-click-modal=false :close-on-press-escape=false :visible.sync="visible" width="80%" append-to-body>
     <el-input
       type="textarea"
-      :autosize="{ minRows: 2, maxRows: 30}"
+      :rows=10
       :disabled="true"
-      v-model="message">
+      v-model="message" class="console-page">
     </el-input>
     <el-button type="primary" style="margin-top: 10px; text-align: right;" round :loading="loading" @click="onCancel">{{loading? 'Processing' : 'Done'}}</el-button>
   </el-dialog>
