@@ -15,7 +15,7 @@
       </ul>
       <el-header class="develop-header">
         <div class="develop-header-search">
-          <el-input prefix-icon="el-icon-search" placeholder="Search" @input="change">
+          <el-input prefix-icon="el-icon-search" placeholder="Search" v-model="searchTitle" @input="change" clearable>
           </el-input>
         </div>
         <div class="develop-header-button">
@@ -74,13 +74,15 @@
         loading: true,
         branches: [],
         filteredBranches: [],
-        activeBranch: ''
+        activeBranch: '',
+        searchTitle: ''
       }
     },
     name: 'develop-page',
     components: { DevelopInfoPage, DevelopForm, ConsolePage },
     methods: {
       change (value) {
+        this.searchTitle = value
         if (!value) {
           this.filteredBranches = this.branches
         } else {
@@ -136,9 +138,9 @@
         this.filteredBranches = []
         this.branches = []
         this.loading = true
-        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
+        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + ' client ' + this.project.type + ' list')
 
-        this.get("big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
+        this.get("big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + ' client ' + this.project.type + ' list', (data) => {
           if (data === null) {
             data = []
           }
