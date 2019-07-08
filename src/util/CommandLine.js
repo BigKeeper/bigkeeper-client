@@ -36,7 +36,6 @@ var CommandLine = {
   },
   parseStderr: function (stderr) {
     var str = stderr.toString()
-
     str = str.substr(str.indexOf('error: '))
 
     if (str.match(/\[\d+;\d+;\d+m/) !== null) {
@@ -50,6 +49,7 @@ var CommandLine = {
     let shellEnv = require('shell-env')
     exec(command, { env: shellEnv.sync('/bin/bash') }, (error, stdout, stderr) => {
       if (error) {
+        console.log(error)
         alert(CommandLine.parseStderr(error), 'Error', {
           confirmButtonText: 'Confirm'
         })

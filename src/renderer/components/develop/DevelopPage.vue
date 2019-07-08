@@ -138,9 +138,9 @@
         this.filteredBranches = []
         this.branches = []
         this.loading = true
-        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + ' client ' + this.project.type + ' list')
+        console.log("big -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json')
 
-        this.get("big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + ' client ' + this.project.type + ' list', (data) => {
+        this.get("big -l false -u '" + this.project.user + "' -p '" + this.project.path + "' " + this.project.type + ' list json', (data) => {
           if (data === null) {
             data = []
           }

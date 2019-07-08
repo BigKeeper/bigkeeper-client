@@ -21,11 +21,11 @@
       <el-form-item label="图片格式">
         <el-row>
           <el-col :span="14" style="text-align: center;">
-           <el-checkbox-group v-model="form.type" style="text-align: left;">
-              <el-checkbox label="PNG" name="type"></el-checkbox>
-              <el-checkbox label="JPEG" name="type"></el-checkbox>
-              <el-checkbox label="PDF" name="type"></el-checkbox>
-              <el-checkbox label="GIF" name="type"></el-checkbox>
+           <el-checkbox-group v-model="form.type" style="text-align: left;" @change="changeSearchType">
+              <el-checkbox label="PNG"></el-checkbox>
+              <el-checkbox label="JPEG"></el-checkbox>
+              <el-checkbox label="PDF"></el-checkbox>
+              <el-checkbox label="GIF"></el-checkbox>
             </el-checkbox-group>
           </el-col>
           <el-col :span="10" style="text-align: left;">
@@ -58,7 +58,7 @@
           name: '',
           mode: 'name',
           isFilter: false,
-          type: [],
+          type: ['PNG'],
           resource: '',
           imagelist: []
         },
@@ -66,10 +66,14 @@
       }
     },
     methods: {
-      changeType (newValue) {
-        console.log(newValue)
-        this.mode = newValue
-        this.$emit('updateType', newValue)
+      changeSearchType (newValue) {
+        this.form.type = newValue
+        console.log(this.form.type)
+      },
+      changeType (type) {
+        console.log(type)
+        this.form.mode = type
+        this.$emit('updateType', type)
       },
       onSubmit () {
         this.loading = true
@@ -90,6 +94,7 @@
             })
           } else if (this.form.mode === 'content') {
             data.forEach((item, index) => {
+              item.file_name = item.file_size
               item.pic = item.path[0]
               if (item.count > 1) {
                 arrs.push(item)

@@ -1,7 +1,10 @@
 <template>
   <div>
     <div class="console">
-      <console-page v-on:updateList="updateList"></console-page>
+      <console-page
+      v-on:updateList="updateList"
+      v-on:updateType="updateType">
+      </console-page>
     </div>
     <el-table ref="table" stripe :data="imagelist" class="el-table-filter"
       highlight-current-row @row-click="handleCurrentChange">
@@ -14,7 +17,7 @@
         </el-table-column>
         <el-table-column
           prop="file_name"
-          label="文件名称"
+          :label=columTitle
           width="150"
           align="center">
         </el-table-column>
@@ -43,7 +46,10 @@
           </template>
         </el-table-column>
       </el-table>
-      <resource-detail-page :rdvisible.sync="rdvisible" v-bind:params="resourceDetail.params"></resource-detail-page>
+      <resource-detail-page :rdvisible.sync="rdvisible"
+      v-bind:params="resourceDetail.params"
+      v-bind:searchMode="resourceDetail.searchMode"
+      ></resource-detail-page>
   </div>
 </template>
 
@@ -63,22 +69,27 @@
           name: '',
           path: '',
           user: '',
-          type: 'image',
           branch: ''
         },
         imagelist: [],
+        columTitle: '图片名称',
+        type: 'image',
         rdvisible: false,
         resourceDetail: {}
       }
     },
     methods: {
+      updateType: function (type) {
+        if (type !== this.type) {
+          this.imagelist = []
+          this.type = type
+        }
+        this.columTitle = type === 'name' ? '图片名称' : '图片大小'
+        this.resourceDetail.searchMode = type
+      },
       updateList: function (dataList) {
-        console.log(dataList)
         this.imagelist = dataList
         this.loading = false
-      },
-      updateType: function (type) {
-        console.log(type)
       },
       handleClose: function (val) {
         console.log('handleClose')
